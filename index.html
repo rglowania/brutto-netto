@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruno · Brutto-Netto 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════════════
+   G-DESIGN — Template v1.0
+   ═══════════════════════════════════════════════════════════════ */
+:root,[data-theme="dark"]{
+  --bg:#0c1410;--surface:#13201a;--surface2:#192b22;--border:#213328;
+  --accent:#5d9e7a;--accent-lt:#89c4a2;--accent-dim:rgba(93,158,122,0.13);
+  --text:#ddeee5;--text-muted:#6e9480;
+}
+[data-theme="light"]{
+  --bg:#f0f7f3;--surface:#ffffff;--surface2:#e6f2eb;--border:#bdd8c8;
+  --accent:#2e7a50;--accent-lt:#1e5c3a;--accent-dim:rgba(46,122,80,0.10);
+  --text:#0f1f16;--text-muted:#4d7a5e;
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme]){
+    --bg:#f0f7f3;--surface:#ffffff;--surface2:#e6f2eb;--border:#bdd8c8;
+    --accent:#2e7a50;--accent-lt:#1e5c3a;--accent-dim:rgba(46,122,80,0.10);
+    --text:#0f1f16;--text-muted:#4d7a5e;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;font-weight:300;
+  min-height:100vh;padding:40px 20px 80px;
+  transition:background .25s,color .25s;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(93,158,122,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(93,158,122,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.container{max-width:960px;margin:0 auto;position:relative;z-index:1;}
+.theme-toggle{
+  position:fixed;top:18px;right:20px;display:flex;gap:3px;z-index:1000;
+  background:var(--surface);border:1px solid var(--border);padding:4px;
+}
+.theme-btn{
+  width:28px;height:28px;background:transparent;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);transition:all .2s;padding:0;
+}
+.theme-btn:hover{color:var(--accent);}
+.theme-btn.active{color:var(--accent);background:var(--accent-dim);}
+.theme-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+header{text-align:center;margin-bottom:40px;}
+.badge{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent-dim);padding:4px 14px;margin-bottom:18px;
+}
+h1{
+  font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);
+  font-weight:600;line-height:1.15;color:var(--text);margin-bottom:10px;
+}
+h1 span{color:var(--accent);}
+.subtitle{font-size:12px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:.5px;}
+.variant-toggle{margin-top:16px;display:inline-flex;gap:0;border:1px solid var(--border);}
+.variant-btn{
+  background:transparent;border:none;padding:7px 20px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-muted);cursor:pointer;transition:all .2s;
+}
+.variant-btn.active{background:var(--accent-dim);color:var(--accent);}
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:24px 28px;margin-bottom:16px;position:relative;
+  transition:background .25s,border-color .25s;
+}
+.card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+.card-title{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:18px;
+}
+.accent-card{
+  background:var(--surface);border:1px solid var(--accent);
+  padding:28px;margin-bottom:16px;position:relative;
+  transition:background .25s;
+}
+select,input[type="number"],input[type="text"]{
+  width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-family:'IBM Plex Mono',monospace;
+  font-size:12px;padding:6px 8px;outline:none;
+  transition:border-color .2s,background .25s;
+}
+select:focus,input:focus{border-color:var(--accent);}
+input[type="number"]{-moz-appearance:textfield;appearance:textfield;}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.hint{font-size:10px;color:var(--text-muted);margin-top:5px;font-family:'IBM Plex Mono',monospace;line-height:1.5;}
+.hint b{color:var(--accent-lt);}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;background:transparent;
+  border:1px solid var(--border);color:var(--text-muted);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;
+  padding:8px 16px;cursor:pointer;transition:all .2s;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{border-color:var(--accent);color:var(--accent);}
+.btn-primary:hover{background:var(--accent-dim);}
+.toggle-label{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);
+}
+.toggle-wrap{position:relative;display:inline-block;width:36px;height:20px;}
+.toggle-cb{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{
+  position:absolute;inset:0;background:#222;border-radius:10px;
+  transition:.2s;cursor:pointer;border:1px solid rgba(255,255,255,0.15);
+}
+.toggle-thumb{
+  position:absolute;left:3px;top:3px;width:14px;height:14px;
+  background:#fff;border-radius:50%;transition:.2s;pointer-events:none;
+}
+.toggle-cb:checked ~ .toggle-thumb{left:19px;}
+.toggle-cb:not(:checked) ~ .toggle-track{background:var(--surface2);border-color:var(--border);}
+.result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;
+}
+.result-row:last-child{border-bottom:none;}
+.result-row .rl{color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;max-width:68%;}
+.result-row .rv{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:400;white-space:nowrap;}
+.result-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;border-top:1px solid var(--accent);margin-top:8px;}
+.result-total-label,.result-total-value{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:400;}
+.note{font-size:10px;color:var(--text-muted);margin-top:14px;line-height:1.7;font-family:'IBM Plex Mono',monospace;}
+footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);opacity:.6;}
+@media(max-width:680px){.card,.accent-card{padding:18px 16px;}}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP-SPEZIFISCH
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+
+/* Eingabezeilen */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;margin-bottom:12px;}
+.field-row:last-child{margin-bottom:0;}
+.field-row.full{grid-template-columns:1fr;}
+.field-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
+/* Felder untereinander ohne ungleiche Abstände */
+.fields{display:flex;flex-direction:column;gap:12px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+
+/* Segment-Toggle (Monat/Jahr, GKV/PKV, etc.) */
+.seg{display:inline-flex;border:1px solid var(--border);}
+.seg-btn{
+  background:transparent;border:none;padding:5px 14px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text-muted);transition:all .2s;
+}
+.seg-btn+.seg-btn{border-left:1px solid var(--border);}
+.seg-btn.on{background:var(--accent-dim);color:var(--accent);}
+
+/* Slider */
+input[type=range]{
+  width:100%;-webkit-appearance:none;height:2px;
+  background:var(--border);outline:none;margin-top:8px;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;background:var(--accent);
+  border-radius:50%;cursor:pointer;border:2px solid var(--bg);
+}
+
+/* Ergebnis-Farben */
+.neg{color:#c0554a;}
+.pos{color:var(--accent);}
+.dim{color:var(--text-muted);}
+
+/* Netto-Headline */
+.netto-display{padding:20px 0 14px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.netto-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.netto-value{font-family:'Playfair Display',serif;font-size:42px;font-weight:600;color:var(--accent);line-height:1;}
+.netto-unit{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--text-muted);margin-left:4px;}
+
+/* Abzüge-Subheader */
+.sub-sep{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text-muted);
+  border-bottom:1px solid var(--border);padding-bottom:4px;margin:14px 0 6px;
+}
+
+/* Modal */
+.mo-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:flex-end;justify-content:center;}
+.mo-overlay.open{display:flex;}
+.mo-box{
+  background:var(--surface);border:1px solid var(--border);border-bottom:none;
+  width:100%;max-width:500px;max-height:88vh;overflow-y:auto;padding-bottom:20px;
+}
+.mo-head{
+  position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);
+  padding:14px 20px;display:flex;justify-content:space-between;align-items:center;
+}
+.mo-head h2{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);}
+.mo-close-btn{background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 12px;cursor:pointer;transition:all .2s;}
+.mo-close-btn:hover{border-color:var(--accent);color:var(--accent);}
+.mo-sec{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:14px 20px 6px;}
+.mo-item{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.mo-item:hover{background:var(--surface2);}
+.mo-item-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);}
+.mo-item-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;}
+.badge-on{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 8px;letter-spacing:1px;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(93,158,122,.3);}
+.badge-off{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 8px;letter-spacing:1px;color:var(--text-muted);border:1px solid var(--border);}
+.mo-done{display:block;margin:14px 20px 0;padding:10px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;width:calc(100% - 40px);transition:background .2s;}
+.mo-done:hover{background:var(--accent-dim);}
+
+/* Opt. Felder im Rechner */
+.opt-row{margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<div class="theme-toggle">
+  <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')" title="Dunkel">
+    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button class="theme-btn" id="btn-system" onclick="setTheme('system')" title="System">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+  </button>
+  <button class="theme-btn" id="btn-light" onclick="setTheme('light')" title="Hell">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
+<div class="container">
+
+  <header>
+    <h1>Brutto–<span>Netto</span></h1>
+    <p class="subtitle">Deutschland &middot; SV + LSt + SolZ &middot; <span id="hdr-jahr">2026</span></p>
+    <div class="variant-toggle">
+      <button class="variant-btn" id="btn-variant-2025" onclick="setJahr(2025,this)">2025</button>
+      <button class="variant-btn active" id="btn-variant-2026" onclick="setJahr(2026,this)">2026</button>
+    </div>
+  </header>
+
+  <div class="two-col">
+
+    <!-- ── LINKE SPALTE: EINGABEN ── -->
+    <div class="fields">
+
+      <!-- Gehalt -->
+      <div class="card">
+        <div class="card-title">Gehalt</div>
+        <div class="fields">
+          <div class="field">
+            <div class="field-label">Bruttogehalt</div>
+            <input type="number" id="brutto" value="4000" min="0" max="99999" oninput="syncSl();calc()">
+            <input type="range" id="bruttoSl" min="0" max="15000" step="50" value="4000" oninput="document.getElementById('brutto').value=this.value;calc()">
+          </div>
+          <div class="field">
+            <div class="field-label">Zeitraum</div>
+            <div class="seg">
+              <button class="seg-btn on" onclick="setZ('monat',this)">Monat</button>
+              <button class="seg-btn" onclick="setZ('jahr',this)">Jahr</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Person & Steuer -->
+      <div class="card">
+        <div class="card-title">Person &amp; Steuer</div>
+        <div class="fields">
+          <div class="field">
+            <div class="field-label">Steuerklasse</div>
+            <select id="sk" onchange="calc();rEZ();rFW();rFR()">
+              <option value="1">I – Ledig</option>
+              <option value="2">II – Alleinerziehend</option>
+              <option value="3">III – Verheiratet, höheres Einkommen</option>
+              <option value="4">IV – Verheiratet, gleiches Einkommen</option>
+              <option value="5">V – Verheiratet, niedrigeres Einkommen</option>
+              <option value="6">VI – Zweiter Job</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Kinder (Freibetrag)</div>
+            <div class="seg">
+              <button class="seg-btn on" onclick="setK(0,this)">Nein</button>
+              <button class="seg-btn" onclick="setK(0.5,this)">0,5</button>
+              <button class="seg-btn" onclick="setK(1,this)">1</button>
+              <button class="seg-btn" onclick="setK(2,this)">2</button>
+            </div>
+          </div>
+          <div class="field" style="display:flex;justify-content:space-between;align-items:center;flex-direction:row;">
+            <label class="toggle-label">
+              Kirchensteuer
+              <span class="toggle-wrap">
+                <input type="checkbox" id="kirche" class="toggle-cb" onchange="syncToggle(this);toggleBL();calc()">
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </span>
+            </label>
+            <label class="toggle-label">
+              RV-befreit
+              <span class="toggle-wrap">
+                <input type="checkbox" id="rvBef" class="toggle-cb" onchange="syncToggle(this);calc()">
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </span>
+            </label>
+            <label class="toggle-label">
+              &gt;23 J., kinderlos
+              <span class="toggle-wrap">
+                <input type="checkbox" id="kinderlos" class="toggle-cb" onchange="syncToggle(this);calc()">
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </span>
+            </label>
+          </div>
+          <div class="field" id="bl-row" style="display:none;">
+            <div class="field-label">Bundesland</div>
+            <select id="bl" onchange="calc()">
+              <option value="west">Anderes Bundesland (9 %)</option>
+              <option value="BY">Baden-Württemberg / Bayern (8 %)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- VL -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">Vermögenswirksame Leistungen</div>
+          <label class="toggle-label">Vorhanden
+            <span class="toggle-wrap">
+              <input type="checkbox" id="vlOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('vl-body').style.display=this.checked?'block':'none';calc()">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div id="vl-body" style="display:none;margin-top:14px;">
+          <div class="fields">
+            <div class="field">
+              <div class="field-label">AG-Anteil VL / Monat</div>
+              <input type="number" id="vlAG" value="40" min="0" max="40" oninput="calc()">
+              <div class="hint">Max. 40 €/Mo · erhöht steuerliches Brutto, wird nicht ausgezahlt</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+            <div class="result-row"><span class="rl">AG-Anteil VL / Mo</span><span class="rv dim" id="vl-ag">—</span></div>
+            <div class="result-row"><span class="rl">Steuer + SV darauf</span><span class="rv neg" id="vl-abg">—</span></div>
+            <div class="result-row"><span class="rl">Nettokosten für Sie</span><span class="rv neg" id="vl-nk">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Krankenversicherung -->
+      <div class="card">
+        <div class="card-title">Krankenversicherung</div>
+        <div class="fields">
+          <div class="field">
+            <div class="seg">
+              <button class="seg-btn on" onclick="setKV('g',this)">Gesetzlich</button>
+              <button class="seg-btn" onclick="setKV('p',this)">Privat</button>
+            </div>
+          </div>
+          <div class="field" id="kvGrow">
+            <div class="field-label">Krankenkasse</div>
+            <select id="kvKasse" onchange="kvChange()"></select>
+            <div id="kvCust" style="display:none;margin-top:8px;">
+              <input type="number" id="kvZ" value="2.50" min="0" max="10" step="0.1" oninput="calc()">
+              <div class="hint">Individueller Zusatzbeitrag in %</div>
+            </div>
+          </div>
+          <div class="field" id="kvProw" style="display:none;">
+            <div class="field-label">PKV-Beitrag / Monat</div>
+            <input type="number" id="kvP" value="300" min="0" oninput="calc()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Steuerfreie Zahlungen -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">Steuerfreie Zahlungen</div>
+          <label class="toggle-label">
+            Vorhanden
+            <span class="toggle-wrap">
+              <input type="checkbox" id="sfOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('sf-body').style.display=this.checked?'block':'none';calc()">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div id="sf-body" style="display:none;margin-top:14px;">
+          <div id="sf-list" class="fields"></div>
+          <button class="btn btn-primary" style="margin-top:8px;font-size:10px;padding:6px 12px;" onclick="addSFRow()">+ Position hinzufügen</button>
+          <div class="hint" style="margin-top:8px;">z.B. Fahrtkostenersatz, Essensgutscheine, Pflegezulage · kein Steuer- oder SV-Abzug</div>
+        </div>
+      </div>
+
+      <!-- Optionale Felder (via Modal) -->
+      <div id="bezSec" class="card" style="display:none;">
+        <div class="card-title">Zusätzliche Bezüge</div>
+        <div class="fields">
+          <div class="field" id="rSF" style="display:none;">
+            <div class="field-label">Steuerfreie Bezüge / Mo</div>
+            <input type="number" id="sfVal" value="0" min="0" oninput="calc()">
+            <div class="hint">Schichtzuschlag, Reisekosten …</div>
+          </div>
+          <div class="field" id="rGW" style="display:none;">
+            <div class="field-label">Geldwerter Vorteil / Mo</div>
+            <input type="number" id="gwVal" value="0" min="0" oninput="calc()">
+            <div class="hint">Sachbezüge z.B. Geschenke</div>
+          </div>
+          <div class="field" id="rBAV" style="display:none;">
+            <div class="field-label">Betriebliche Altersvorsorge / Mo</div>
+            <input type="number" id="bavVal" value="0" min="0" oninput="calc()">
+            <div class="hint" id="bavHint">Steuerfrei bis 292 €/Mo</div>
+          </div>
+          <div class="field" id="rVWL" style="display:none;">
+            <div class="field-label">VWL AG-Anteil / Mo</div>
+            <input type="number" id="vwlVal" value="0" min="0" oninput="calc()">
+            <div class="hint">z.B. Bausparvertrag</div>
+          </div>
+        </div>
+      </div>
+      <div id="abzSec" class="card" style="display:none;">
+        <div class="card-title">Zusätzliche Abzüge</div>
+        <div class="fields">
+          <div class="field" id="rNA" style="display:none;">
+            <div class="field-label">Nettoabzüge / Mo</div>
+            <input type="number" id="naVal" value="0" min="0" oninput="calc()">
+            <div class="hint">z.B. Fitnessstudio</div>
+          </div>
+        </div>
+      </div>
+      <div id="stSec" class="card" style="display:none;">
+        <div class="card-title">Steuereinstellungen</div>
+        <div class="fields">
+          <div class="field" id="rFB" style="display:none;">
+            <div class="field-label">Steuerfreibetrag / Jahr</div>
+            <input type="number" id="fbVal" value="0" min="0" oninput="calc()">
+            <div class="hint">Falls Antrag gestellt</div>
+          </div>
+          <div class="field" id="rMJ" style="display:none;">
+            <label class="toggle-label">
+              Mini-Job
+              <span class="toggle-wrap">
+                <input type="checkbox" id="isMJ" class="toggle-cb" onchange="syncToggle(this);calc()">
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </span>
+            </label>
+            <div class="hint" id="mjHint">Bis 556 €/Mo</div>
+          </div>
+          <div class="field" id="rUEB" style="display:none;">
+            <label class="toggle-label">
+              Übergangsbereich
+              <span class="toggle-wrap">
+                <input type="checkbox" id="isUEB" class="toggle-cb" onchange="syncToggle(this);calc()">
+                <span class="toggle-track"></span>
+                <span class="toggle-thumb"></span>
+              </span>
+            </label>
+            <div class="hint" id="uebHint">556–2.000 €/Mo</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-primary" onclick="openMo()">⚙ Weitere Optionen</button>
+      </div>
+
+
+
+      <!-- Firmenwagen -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">Firmenwagen</div>
+          <label class="toggle-label">Ich habe einen
+            <span class="toggle-wrap">
+              <input type="checkbox" id="fwOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fw-body').style.display=this.checked?'block':'none';rFW()">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div id="fw-body" style="display:none;margin-top:14px;">
+          <div class="fields">
+            <div class="field">
+              <div class="field-label">Bruttolistenpreis</div>
+              <input type="number" id="fwP" value="0" oninput="rFW()">
+            </div>
+            <div class="field">
+              <div class="field-label">Fahrzeugtyp</div>
+              <select id="fwT" onchange="rFW()">
+                <option value="0.01">Verbrenner / Hybrid (1,0 %)</option>
+                <option value="0.005">Elektro &gt; 100.000 € (0,5 %)</option>
+                <option value="0.0025">Elektro ≤ 100.000 € (0,25 %)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Entfernung Wohnung–Arbeit</div>
+              <input type="number" id="fwKm" value="0" oninput="rFW()">
+              <div class="hint">km (für 0,03%-Fahrtkostenanteil)</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Bruttogehalt / Mo</div>
+              <input type="number" id="fwB" value="0" oninput="rFW()">
+              <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+            <div class="result-row"><span class="rl">GWV gesamt / Mo</span><span class="rv neg" id="fw-gv">—</span></div>
+            <div class="result-row"><span class="rl">davon 1%-Anteil</span><span class="rv dim" id="fw-1p">—</span></div>
+            <div class="result-row"><span class="rl">davon Fahrtkostenanteil</span><span class="rv dim" id="fw-fk">—</span></div>
+            <div class="result-row"><span class="rl">Steuer-Mehrbelastung / Mo</span><span class="rv neg" id="fw-mst">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Firmenrad -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">Firmenrad</div>
+          <label class="toggle-label">Ich habe eines
+            <span class="toggle-wrap">
+              <input type="checkbox" id="frOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fr-body').style.display=this.checked?'block':'none';rFR()">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div id="fr-body" style="display:none;margin-top:14px;">
+          <div class="fields">
+            <div class="field">
+              <div class="field-label">Bruttolistenpreis Fahrrad / E-Bike</div>
+              <input type="number" id="frP" value="0" oninput="rFR()">
+            </div>
+            <div class="field">
+              <div class="field-label">Bruttogehalt / Mo</div>
+              <input type="number" id="frB" value="0" oninput="rFR()">
+              <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+            <div class="result-row"><span class="rl">GWV (0,25 %) / Mo</span><span class="rv neg" id="fr-gv">—</span></div>
+            <div class="result-row"><span class="rl">Steuer-Mehrbelastung / Mo</span><span class="rv neg" id="fr-mst">—</span></div>
+            <div class="result-row"><span class="rl">Vergl. Kauf über 60 Mo.</span><span class="rv dim" id="fr-kauf">—</span></div>
+            <div class="result-row"><span class="rl">Ersparnis ggü. Kauf / Mo</span><span class="rv pos" id="fr-ers">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Einmalzahlung -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="card-title" style="margin-bottom:0;">Einmalzahlung</div>
+          <label class="toggle-label">Ich habe eine
+            <span class="toggle-wrap">
+              <input type="checkbox" id="ezOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('ez-body').style.display=this.checked?'block':'none';">
+              <span class="toggle-track"></span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <div id="ez-body" style="display:none;margin-top:14px;">
+          <div class="fields">
+            <div class="field">
+              <div class="field-label">Laufendes Brutto / Mo</div>
+              <input type="number" id="ezB" value="0" oninput="rEZ()">
+              <div class="hint">ohne Einmalzahlung</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Einmalzahlung brutto</div>
+              <input type="number" id="ezE" value="0" oninput="rEZ()">
+              <div class="hint">13. Gehalt, Bonus, Prämie …</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+            <div class="result-row"><span class="rl">Einmalzahlung brutto</span><span class="rv dim" id="ez-b">—</span></div>
+            <div class="result-row"><span class="rl">Steuern + SV darauf</span><span class="rv neg" id="ez-abz">—</span></div>
+            <div class="result-row"><span class="rl">Effektiver Steuersatz</span><span class="rv dim" id="ez-rate">—</span></div>
+            <div class="result-row"><span class="rl">Einmalzahlung netto</span><span class="rv pos" id="ez-n">—</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /linke Spalte -->
+
+    <!-- ── RECHTE SPALTE: ERGEBNIS ── -->
+    <div class="fields">
+
+      <!-- Netto-Ergebnis -->
+      <div class="accent-card">
+        <div class="netto-display">
+          <div class="netto-label">Netto / Monat</div>
+          <div><span class="netto-value" id="d-netto">—</span><span class="netto-unit">EUR</span></div>
+        </div>
+
+        <div class="sub-sep">Sozialversicherung</div>
+        <div class="result-row"><span class="rl">Rentenversicherung</span><span class="rv neg" id="d-rv">—</span></div>
+        <div class="result-row"><span class="rl">Arbeitslosenversicherung</span><span class="rv neg" id="d-av">—</span></div>
+        <div class="result-row"><span class="rl">Krankenversicherung</span><span class="rv neg" id="d-kv">—</span></div>
+        <div class="result-row"><span class="rl">Pflegeversicherung</span><span class="rv neg" id="d-pv">—</span></div>
+        <div class="result-row"><span class="rl">Σ&nbsp;Sozialabgaben</span><span class="rv neg" id="d-soz">—</span></div>
+
+        <div class="sub-sep">Steuern &middot; ZvE: <span id="d-zve">—</span></div>
+        <div class="result-row"><span class="rl">Lohnsteuer (SK <span id="d-sk">1</span>)</span><span class="rv neg" id="d-lst">—</span></div>
+        <div class="result-row"><span class="rl">Solidaritätszuschlag</span><span class="rv neg" id="d-solz">—</span></div>
+        <div class="result-row" id="d-kirche-row" style="display:none"><span class="rl">Kirchensteuer</span><span class="rv neg" id="d-kirche">—</span></div>
+        <div class="result-row"><span class="rl">Σ&nbsp;Steuern</span><span class="rv neg" id="d-st">—</span></div>
+
+        <div class="result-total">
+          <span class="result-total-label" style="font-weight:600;">Netto</span>
+          <span class="result-total-value pos" id="d-netto2">—</span>
+        </div>
+      </div>
+
+      <!-- Übersicht -->
+      <div class="card">
+        <div class="card-title">Eckdaten</div>
+        <div class="result-row"><span class="rl">Brutto / Monat</span><span class="rv" id="s-brutto">—</span></div>
+        <div class="result-row"><span class="rl">Steuerjahr</span><span class="rv" id="s-jahr">2026</span></div>
+        <div class="result-row"><span class="rl">Steuerklasse</span><span class="rv" id="s-sk">—</span></div>
+        <div class="result-row" id="s-bl-row" style="display:none"><span class="rl">Bundesland</span><span class="rv" id="s-bl">—</span></div>
+        <div class="result-row"><span class="rl">Kirchensteuer</span><span class="rv" id="s-kirche">—</span></div>
+        <div class="result-row"><span class="rl">Kinder</span><span class="rv" id="s-kinder">—</span></div>
+        <div class="result-row"><span class="rl">KV</span><span class="rv" id="s-kvtyp">—</span></div>
+        <div class="result-row"><span class="rl">Krankenkasse</span><span class="rv" id="s-kasse">—</span></div>
+        <div class="result-row"><span class="rl">&gt;23 J., kinderlos</span><span class="rv" id="s-alter">—</span></div>
+      </div>
+
+    </div><!-- /rechte Spalte -->
+
+  </div><!-- /two-col -->
+
+</div><!-- /container -->
+
+<footer>&copy; 2025 Robin Glowania</footer>
+
+<!-- MODAL -->
+<div class="mo-overlay" id="mo">
+  <div class="mo-box">
+    <div class="mo-head">
+      <h2>Optionale Felder</h2>
+      <button class="mo-close-btn" onclick="closeMo()">Schließen</button>
+    </div>
+    <div class="mo-sec">Bezüge</div>
+    <div class="mo-item" onclick="togF('sf')"><div><div class="mo-item-title">Steuerfreie Bezüge</div><div class="mo-item-sub">z.B. Schichtzuschläge, Reisekosten</div></div><span class="badge-off" id="b-sf">AUS</span></div>
+    <div class="mo-item" onclick="togF('gw')"><div><div class="mo-item-title">Geldwerter Vorteil</div><div class="mo-item-sub">Sachbezüge z.B. Geschenke</div></div><span class="badge-off" id="b-gw">AUS</span></div>
+    <div class="mo-item" onclick="togF('bav')"><div><div class="mo-item-title">Betriebliche Altersvorsorge</div><div class="mo-item-sub">z.B. Direktversicherung</div></div><span class="badge-off" id="b-bav">AUS</span></div>
+    <div class="mo-item" onclick="togF('vwl')"><div><div class="mo-item-title">Vermögenswirksame Leistungen</div><div class="mo-item-sub">z.B. Bausparvertrag</div></div><span class="badge-off" id="b-vwl">AUS</span></div>
+    <div class="mo-sec">Abzüge</div>
+    <div class="mo-item" onclick="togF('na')"><div><div class="mo-item-title">Nettoabzüge</div><div class="mo-item-sub">z.B. Fitnessstudio-Mitgliedschaft</div></div><span class="badge-off" id="b-na">AUS</span></div>
+    <div class="mo-sec">Steuer</div>
+    <div class="mo-item" onclick="togF('fb')"><div><div class="mo-item-title">Steuerfreibetrag</div><div class="mo-item-sub">Falls Antrag dafür gestellt</div></div><span class="badge-off" id="b-fb">AUS</span></div>
+    <div class="mo-item" onclick="togF('ueb')"><div><div class="mo-item-title">Übergangsbereich</div><div class="mo-item-sub" id="mo-ueb-sub">Relevant bei 556–2.000 €/Mo</div></div><span class="badge-off" id="b-ueb">AUS</span></div>
+    <div class="mo-item" onclick="togF('mj')"><div><div class="mo-item-title">Mini-Job</div><div class="mo-item-sub" id="mo-mj-sub">Relevant bis 556 €/Mo</div></div><span class="badge-off" id="b-mj">AUS</span></div>
+    <button class="mo-done" onclick="closeMo()">Fertig</button>
+  </div>
+</div>
+
+<script>
+/* ── Theme ── */
+function setTheme(t){
+  if(t==='system')document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme',t);
+  try{localStorage.setItem('g-theme',t);}catch(e){}
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  var btn=document.getElementById('btn-'+t);if(btn)btn.classList.add('active');
+}
+(function(){var s='system';try{s=localStorage.getItem('g-theme')||'system';}catch(e){}setTheme(s);})();
+
+function syncToggle(cb){
+  var wrap=cb.closest('.toggle-wrap');if(!wrap)return;
+  var track=wrap.querySelector('.toggle-track'),thumb=wrap.querySelector('.toggle-thumb');
+  if(track){track.style.background=cb.checked?'#222':'var(--surface2)';track.style.border=cb.checked?'1px solid rgba(255,255,255,0.15)':'1px solid var(--border)';}
+  if(thumb)thumb.style.left=cb.checked?'19px':'3px';
+}
+document.querySelectorAll('.toggle-cb').forEach(cb=>{syncToggle(cb);cb.addEventListener('change',function(){syncToggle(this);});});
+
+/* ── Jahreswerte ── */
+const JAHRE={
+  2026:{GFB:12084,BBG_RV:7300,BBG_KV:5512.5,RV:.093,AV:.013,KV_AN:.073,PV_BASE:.01775,WK:1230,KIND_FB:9600,ENTL_SK2:4260,SOLZ_FREI:18130,MJ_GRENZE:556,UEB_MAX:2000,BAV_MAX:292,
+    kassen:[{v:'2.50',t:'Ø GKV-Zusatzbeitrag · 2,50 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.69',t:'AOK (Ø) · 2,69 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.50',t:'Barmer · 1,50 %'},{v:'1.58',t:'KKH · 1,58 %'},{v:'2.49',t:'IKK classic · 2,49 %'},{v:'custom',t:'Manuell …'}]},
+  2025:{GFB:12084,BBG_RV:7300,BBG_KV:5512.5,RV:.093,AV:.013,KV_AN:.073,PV_BASE:.01775,WK:1230,KIND_FB:9600,ENTL_SK2:4260,SOLZ_FREI:18130,MJ_GRENZE:556,UEB_MAX:2000,BAV_MAX:292,
+    kassen:[{v:'2.45',t:'Ø GKV-Zusatzbeitrag · 2,45 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.59',t:'AOK (Ø) · 2,59 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.50',t:'Barmer · 1,50 %'},{v:'1.58',t:'KKH · 1,58 %'},{v:'2.49',t:'IKK classic · 2,49 %'},{v:'custom',t:'Manuell …'}]}
+};
+const BL_NAME={west:'Anderes Bundesland (9%)',BY:'BY / BW (8%)',BW:'BY / BW (8%)'};
+const KI8=['BW','BY'];
+let jahr=2026,zeitraum='monat',kinder=0,kvTyp='g';
+const FT={sf:false,gw:false,bav:false,vwl:false,na:false,fb:false,ueb:false,mj:false};
+function P(){return JAHRE[jahr];}
+
+function fmt(n,d=2){return Math.abs(n||0).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function neg(v){return v>0?'−'+fmt(v)+' €':'0,00 €';}
+function estG(x){const p=P();if(x<=p.GFB)return 0;if(x<=17430){const y=(x-p.GFB)/10000;return(922.98*y+1400)*y;}if(x<=68429){const z=(x-17430)/10000;return(181.19*z+2397)*z+1025.38;}if(x<=278825)return .42*x-10602.13;return .45*x-18936.88;}
+function est(zvE,sk){if(zvE<=0)return 0;return sk==3?estG(zvE/2)*2:estG(zvE);}
+function solz(e){const s=P().SOLZ_FREI;if(e<=0||e<=s)return 0;return Math.min(e*.055,(e-s)*.119);}
+function kiSatz(bl){return KI8.includes(bl)?.08:.09;}
+function kvZus(){const k=document.getElementById('kvKasse').value;return k==='custom'?(parseFloat(document.getElementById('kvZ').value)||0)/100:parseFloat(k)/100;}
+function pvEff(){const p=P();return Math.max(0,p.PV_BASE+(document.getElementById('kinderlos').checked?.006:0)-(kinder>=2?Math.min(kinder-1,4)*.0025:0));}
+
+function setJahr(y,btn){
+  jahr=y;
+  document.querySelectorAll('.variant-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('hdr-jahr').textContent=y;
+  document.getElementById('s-jahr').textContent=y;
+  const sel=document.getElementById('kvKasse'),old=sel.value;
+  sel.innerHTML='';
+  P().kassen.forEach(k=>{const o=document.createElement('option');o.value=k.v;o.textContent=k.t;sel.appendChild(o);});
+  sel.value=old;if(!sel.value)sel.selectedIndex=0;
+  document.getElementById('bavHint').textContent='Steuerfrei bis '+P().BAV_MAX+' €/Mo';
+  document.getElementById('mjHint').textContent='Bis '+P().MJ_GRENZE+' €/Mo';
+  document.getElementById('uebHint').textContent=P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
+  document.getElementById('mo-mj-sub').textContent='Relevant bis '+P().MJ_GRENZE+' €/Mo';
+  document.getElementById('mo-ueb-sub').textContent='Relevant bei '+P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
+  calc();rFW();rFR();rEZ();
+}
+
+function calc(){
+  syncSl();
+  const p=P();
+  const bE=parseFloat(document.getElementById('brutto').value)||0;
+  const bMo=zeitraum==='monat'?bE:bE/12,bJa=bMo*12;
+  const skV=parseInt(document.getElementById('sk').value);
+  const blV=document.getElementById('bl').value;
+  const kircheOn=document.getElementById('kirche').checked;
+  const kl=document.getElementById('kinderlos').checked;
+  const rvBef=document.getElementById('rvBef').checked;
+  const isMJ=FT.mj&&document.getElementById('isMJ').checked;
+  const isUEB=FT.ueb&&document.getElementById('isUEB').checked;
+
+  if(isMJ){
+    const nn=fmt(bMo)+' €';
+    document.getElementById('d-netto').textContent=fmt(bMo);
+    document.getElementById('d-netto2').textContent=nn;
+    ['d-rv','d-av','d-kv','d-pv','d-soz','d-lst','d-solz','d-st'].forEach(id=>document.getElementById(id).textContent='0,00 €');
+    document.getElementById('d-zve').textContent='0,00 €/Mo';
+    setSumm(bMo,skV,blV,kircheOn,kl);return;
+  }
+
+  const pve=pvEff();
+  const sfMo=getSFTotal()+(FT.sf?(parseFloat(document.getElementById('sfVal').value)||0):0);
+  const gwMo=FT.gw?(parseFloat(document.getElementById('gwVal').value)||0):0;
+  const bavMo=FT.bav?(parseFloat(document.getElementById('bavVal').value)||0):0;
+  const naMo=FT.na?(parseFloat(document.getElementById('naVal').value)||0):0;
+  const fbJa=FT.fb?(parseFloat(document.getElementById('fbVal').value)||0):0;
+  const bavSF=Math.min(bavMo,p.BAV_MAX);
+  const pkv=parseFloat(document.getElementById('kvP').value)||0;
+
+  // VL: AG-Anteil erhöht steuerliches + SV-pflichtiges Brutto, wird nicht ausgezahlt
+  const vlMo=document.getElementById('vlOn').checked?(parseFloat(document.getElementById('vlAG').value)||0):0;
+
+  // Hilfsfunktion: SV + Steuer für beliebiges monatliches Brutto berechnen
+  function calcAbgaben(bm){
+    let kv=kvTyp==='g'?Math.min(bm,p.BBG_KV)*(p.KV_AN+kvZus()/2):pkv;
+    let rv=rvBef?0:Math.min(bm,p.BBG_RV)*p.RV;
+    let av=Math.min(bm,p.BBG_RV)*p.AV;
+    let pv=Math.min(bm,p.BBG_KV)*pve;
+    let s=rv+av+pv+kv;
+    if(isUEB&&bm>=p.MJ_GRENZE&&bm<=p.UEB_MAX){const r=.15+.85*(bm-p.MJ_GRENZE)/(p.UEB_MAX-p.MJ_GRENZE);s*=r;rv*=r;av*=r;pv*=r;kv*=r;}
+    const bja=bm*12;
+    const sja=s*12;
+    const zv=Math.max(0,(bja+gwMo*12)-sfMo*12-bavSF*12-sja-p.WK-(skV==3?72:36)-kinder*p.KIND_FB-(skV==2?p.ENTL_SK2:0)-fbJa);
+    const eja=est(zv,skV),slz=solz(eja),kja=kircheOn?eja*kiSatz(blV):0;
+    const stm=(eja+slz+kja)/12;
+    return {rv,av,pv,kv,soz:s,stMo:stm,estJa:eja,solzJa:slz,kJa:kja,zvE:zv};
+  }
+
+  // Berechnung mit VL-erhöhtem Brutto (steuerlich + SV)
+  const bMitVL=bMo+vlMo;
+  const a=calcAbgaben(bMitVL);
+  const nMo=bMo-a.soz-a.stMo+sfMo-naMo; // Auszahlung ohne VL-Betrag
+
+  // VL-Ausweis: Differenz zu Berechnung ohne VL
+  if(vlMo>0){
+    const a0=calcAbgaben(bMo);
+    const nOhne=bMo-a0.soz-a0.stMo+sfMo-naMo;
+    const vlAbg=nOhne-nMo;
+    document.getElementById('vl-ag').textContent=fmt(vlMo)+' €';
+    document.getElementById('vl-abg').textContent='−'+fmt(Math.max(0,vlAbg))+' €';
+    document.getElementById('vl-nk').textContent='−'+fmt(Math.max(0,vlAbg))+' €';
+  }
+
+  const {rv:rvAN2,av:avAN2,pv:pvAN2,kv:kvAN2,soz:soz2,stMo,estJa,solzJa,kJa,zvE}=a;
+
+  document.getElementById('d-netto').textContent=fmt(nMo);
+  document.getElementById('d-netto2').textContent=fmt(nMo)+' €';
+  document.getElementById('d-rv').textContent=neg(rvAN2);
+  document.getElementById('d-av').textContent=neg(avAN2);
+  document.getElementById('d-kv').textContent=neg(kvAN2);
+  document.getElementById('d-pv').textContent=neg(pvAN2);
+  document.getElementById('d-soz').textContent=neg(soz2);
+  document.getElementById('d-zve').textContent=fmt(zvE/12)+' €/Mo';
+  document.getElementById('d-sk').textContent=skV;
+  document.getElementById('d-lst').textContent=neg(estJa/12);
+  document.getElementById('d-solz').textContent=neg(solzJa/12);
+  document.getElementById('d-kirche').textContent=neg(kJa/12);
+  document.getElementById('d-kirche-row').style.display=kircheOn&&kJa>0?'flex':'none';
+  document.getElementById('d-st').textContent=neg(stMo);
+  setSumm(bMo,skV,blV,kircheOn,kl);
+  rEZ();
+}
+
+function setSumm(bMo,sk,bl,kirche,kl){
+  document.getElementById('s-brutto').textContent=fmt(bMo,0)+' €';
+  document.getElementById('s-sk').textContent=sk;
+  document.getElementById('s-bl').textContent=BL_NAME[bl]||bl;
+  document.getElementById('s-kirche').textContent=kirche?'Ja':'Nein';
+  document.getElementById('s-kinder').textContent=kinder>0?String(kinder).replace('.',','):'Nein';
+  document.getElementById('s-kvtyp').textContent=kvTyp==='g'?'Gesetzlich':'Privat';
+  const kasseEl=document.getElementById('kvKasse');
+  const kn=kvTyp==='g'?(kasseEl.options[kasseEl.selectedIndex]?.text.split('·')[0].trim()+' · '+(kvZus()*100).toFixed(2).replace('.',',')+' %'):'PKV';
+  document.getElementById('s-kasse').textContent=kn;
+  document.getElementById('s-alter').textContent=kl?'Ja':'Nein';
+}
+
+function simpleNJ(bj,sk){
+  const p=P();
+  const soz=Math.min(bj,p.BBG_RV*12)*(p.RV+p.AV)+Math.min(bj,p.BBG_KV*12)*(p.KV_AN+kvZus()/2+pvEff());
+  const zvE=Math.max(0,bj-soz-p.WK-(sk==3?72:36));
+  const e=est(zvE,sk);return bj-soz-e-solz(e);
+}
+
+function rFW(){
+  const pr=parseFloat(document.getElementById('fwP').value)||0;
+  const pct=parseFloat(document.getElementById('fwT').value)||.01;
+  const km=parseFloat(document.getElementById('fwKm').value)||0;
+  const b=parseFloat(document.getElementById('fwB').value)||0;
+  const sk=parseInt(document.getElementById('sk').value);
+  const gvMo=pr*pct+pr*km*.0003;
+  const mst=Math.abs(simpleNJ((b+gvMo)*12,sk)/12-simpleNJ(b*12,sk)/12-gvMo);
+  document.getElementById('fw-gv').textContent='+'+fmt(gvMo)+' €';
+  document.getElementById('fw-1p').textContent='+'+fmt(pr*pct)+' €';
+  document.getElementById('fw-fk').textContent='+'+fmt(pr*km*.0003)+' €';
+  document.getElementById('fw-mst').textContent='≈ −'+fmt(mst)+' €';
+}
+
+function rFR(){
+  const pr=parseFloat(document.getElementById('frP').value)||0;
+  const b=parseFloat(document.getElementById('frB').value)||0;
+  const sk=parseInt(document.getElementById('sk').value);
+  const gvMo=pr*.0025;
+  const mst=Math.abs(simpleNJ((b+gvMo)*12,sk)/12-simpleNJ(b*12,sk)/12-gvMo);
+  const kaufMo=pr/60;
+  document.getElementById('fr-gv').textContent='+'+fmt(gvMo)+' €/Mo';
+  document.getElementById('fr-mst').textContent='≈ −'+fmt(mst)+' €/Mo';
+  document.getElementById('fr-kauf').textContent=fmt(kaufMo)+' €/Mo';
+  document.getElementById('fr-ers').textContent='≈ +'+fmt(Math.max(0,kaufMo-mst))+' €/Mo';
+}
+
+function rEZ(){
+  const b=parseFloat(document.getElementById('ezB').value)||0;
+  const ez=parseFloat(document.getElementById('ezE').value)||0;
+  const sk=parseInt(document.getElementById('sk').value);
+  const nO=simpleNJ(b*12,sk),nM=simpleNJ(b*12+ez,sk);
+  const nez=nM-nO,abz=ez-nez,rate=ez>0?abz/ez:0;
+  document.getElementById('ez-b').textContent=fmt(ez)+' €';
+  document.getElementById('ez-abz').textContent='−'+fmt(abz)+' €';
+  document.getElementById('ez-rate').textContent=(rate*100).toFixed(1)+' %';
+  document.getElementById('ez-n').textContent=fmt(nez)+' €';
+}
+
+function rWN(){
+  const n=parseFloat(document.getElementById('wnN').value)||0;
+  syncWN();
+  if(n<=0){document.getElementById('wn-res').style.display='none';return;}
+  document.getElementById('wn-res').style.display='block';
+  const sk=parseInt(document.getElementById('wnSK').value);
+  let lo=n,hi=n*8;
+  for(let i=0;i<90;i++){const mid=(lo+hi)/2;if(simpleNJ(mid*12,sk)/12<n)lo=mid;else hi=mid;}
+  const b=(lo+hi)/2,abg=b>0?(b-n)/b:0;
+  document.getElementById('wn-n').textContent=fmt(n)+' €';
+  document.getElementById('wn-q').textContent=(abg*100).toFixed(1)+' %';
+  document.getElementById('wn-b').textContent=fmt(b)+' €';
+  document.getElementById('wn-bj').textContent=fmt(b*12)+' €';
+}
+
+// ── Steuerfreie Zahlungen ──
+let sfRows=[];
+let sfRowId=0;
+function addSFRow(){
+  const id='sf'+sfRowId++;
+  sfRows.push(id);
+  const div=document.createElement('div');
+  div.id='sfrow-'+id;
+  div.style.cssText='display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin-bottom:8px;';
+  div.innerHTML=`<input type="number" id="sfv-${id}" value="0" min="0" placeholder="Betrag €/Mo" oninput="calc()" style="width:100%"><input type="text" id="sfl-${id}" placeholder="Bezeichnung" oninput="" style="width:120px;font-size:11px"><button onclick="removeSFRow('${id}')" style="background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;cursor:pointer;white-space:nowrap;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">✕</button>`;
+  document.getElementById('sf-list').appendChild(div);
+  calc();
+}
+function removeSFRow(id){
+  sfRows=sfRows.filter(r=>r!==id);
+  const el=document.getElementById('sfrow-'+id);
+  if(el)el.remove();
+  calc();
+}
+function getSFTotal(){
+  if(!document.getElementById('sfOn').checked)return 0;
+  return sfRows.reduce((s,id)=>{
+    const v=parseFloat(document.getElementById('sfv-'+id)?.value)||0;
+    return s+v;
+  },0);
+}
+
+function toggleBL(){
+  const on=document.getElementById('kirche').checked;
+  document.getElementById('bl-row').style.display=on?'block':'none';
+  document.getElementById('s-bl-row').style.display=on?'flex':'none';
+}
+function setZ(z,btn){zeitraum=z;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calc();}
+function setK(k,btn){kinder=k;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calc();}
+function setKV(t,btn){
+  kvTyp=t;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('kvGrow').style.display=t==='g'?'block':'none';
+  document.getElementById('kvProw').style.display=t==='p'?'block':'none';
+  calc();
+}
+function kvChange(){document.getElementById('kvCust').style.display=document.getElementById('kvKasse').value==='custom'?'block':'none';calc();}
+function syncSl(){document.getElementById('bruttoSl').value=parseFloat(document.getElementById('brutto').value)||0;}
+function syncWN(){document.getElementById('wnSl').value=parseFloat(document.getElementById('wnN').value)||0;}
+function openMo(){document.getElementById('mo').classList.add('open');}
+function closeMo(){document.getElementById('mo').classList.remove('open');}
+document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeMo();});
+
+const moMap={sf:{row:'rSF',sec:'bezSec'},gw:{row:'rGW',sec:'bezSec'},bav:{row:'rBAV',sec:'bezSec'},vwl:{row:'rVWL',sec:'bezSec'},na:{row:'rNA',sec:'abzSec'},fb:{row:'rFB',sec:'stSec'},ueb:{row:'rUEB',sec:'stSec'},mj:{row:'rMJ',sec:'stSec'}};
+const grpKeys={bezSec:['sf','gw','bav','vwl'],abzSec:['na'],stSec:['fb','ueb','mj']};
+function togF(key){
+  FT[key]=!FT[key];
+  const bdg=document.getElementById('b-'+key);
+  bdg.textContent=FT[key]?'AN':'AUS';
+  bdg.className=FT[key]?'badge-on':'badge-off';
+  const m=moMap[key];
+  document.getElementById(m.row).style.display=FT[key]?'block':'none';
+  document.getElementById(m.sec).style.display=grpKeys[m.sec].some(k=>FT[k])?'block':'none';
+  calc();
+}
+
+// Init
+const sel=document.getElementById('kvKasse');
+P().kassen.forEach(k=>{const o=document.createElement('option');o.value=k.v;o.textContent=k.t;sel.appendChild(o);});
+calc();rFW();rFR();rEZ();
+</script>
+</body>
+</html>
