@@ -259,8 +259,8 @@ input[type=range]::-webkit-slider-thumb{
         <div class="fields">
           <div class="field">
             <div class="field-label">Bruttogehalt</div>
-            <input type="number" id="brutto" value="4000" min="0" max="99999" oninput="syncSl();calc()">
-            <input type="range" id="bruttoSl" min="0" max="15000" step="50" value="4000" oninput="document.getElementById('brutto').value=this.value;calc()">
+            <input type="text" id="brutto" value="4.000" inputmode="decimal" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="syncSl();calc()">
+            <input type="range" id="bruttoSl" min="0" max="15000" step="50" value="4000" oninput="document.getElementById('brutto').value=Number(this.value).toLocaleString('de-DE');calc()">
           </div>
           <div class="field">
             <div class="field-label">Zeitraum</div>
@@ -496,7 +496,7 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fields">
             <div class="field">
               <div class="field-label">Bruttolistenpreis</div>
-              <input type="number" id="fwP" value="0" oninput="rFW()">
+              <input type="text" id="fwP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
             </div>
             <div class="field">
               <div class="field-label">Fahrzeugtyp</div>
@@ -508,12 +508,12 @@ input[type=range]::-webkit-slider-thumb{
             </div>
             <div class="field">
               <div class="field-label">Entfernung Wohnung–Arbeit</div>
-              <input type="number" id="fwKm" value="0" oninput="rFW()">
+              <input type="text" id="fwKm" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
               <div class="hint">km (für 0,03%-Fahrtkostenanteil)</div>
             </div>
             <div class="field">
               <div class="field-label">Bruttogehalt / Mo</div>
-              <input type="number" id="fwB" value="0" oninput="rFW()">
+              <input type="text" id="fwB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
               <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
             </div>
           </div>
@@ -542,11 +542,11 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fields">
             <div class="field">
               <div class="field-label">Bruttolistenpreis Fahrrad / E-Bike</div>
-              <input type="number" id="frP" value="0" oninput="rFR()">
+              <input type="text" id="frP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()">
             </div>
             <div class="field">
               <div class="field-label">Bruttogehalt / Mo</div>
-              <input type="number" id="frB" value="0" oninput="rFR()">
+              <input type="text" id="frB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()">
               <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
             </div>
           </div>
@@ -575,12 +575,12 @@ input[type=range]::-webkit-slider-thumb{
           <div class="fields">
             <div class="field">
               <div class="field-label">Laufendes Brutto / Mo</div>
-              <input type="number" id="ezB" value="0" oninput="rEZ()">
+              <input type="text" id="ezB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()">
               <div class="hint">ohne Einmalzahlung</div>
             </div>
             <div class="field">
               <div class="field-label">Einmalzahlung brutto</div>
-              <input type="number" id="ezE" value="0" oninput="rEZ()">
+              <input type="text" id="ezE" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()">
               <div class="hint">13. Gehalt, Bonus, Prämie …</div>
             </div>
           </div>
@@ -644,7 +644,12 @@ input[type=range]::-webkit-slider-thumb{
 
 </div><!-- /container -->
 
-<footer>&copy; 2025 Robin Glowania</footer>
+<footer>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:8px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;">
+    Alle Berechnungen sind Näherungswerte auf Basis von §&thinsp;32a EStG und den angegebenen Beitragssätzen. Individuelle Faktoren wie Progressionsvorbehalt oder Freibeträge aus anderen Einkünften bleiben unberücksichtigt. Kein Ersatz für individuelle Steuerberatung · Alle Angaben ohne Gewähr
+  </div>
+  &copy; Robin Glowania
+</footer>
 
 <!-- MODAL -->
 <div class="mo-overlay" id="mo">
@@ -730,7 +735,7 @@ function setJahr(y,btn){
 function calc(){
   syncSl();
   const p=P();
-  const bE=parseFloat(document.getElementById('brutto').value)||0;
+  const bE=parseDe(document.getElementById('brutto').value);
   const bMo=zeitraum==='monat'?bE:bE/12,bJa=bMo*12;
   const skV=parseInt(document.getElementById('sk').value);
   const blV=document.getElementById('bl').value;
@@ -833,10 +838,10 @@ function simpleNJ(bj,sk){
 }
 
 function rFW(){
-  const pr=parseFloat(document.getElementById('fwP').value)||0;
+  const pr=parseDe(document.getElementById('fwP').value);
   const pct=parseFloat(document.getElementById('fwT').value)||.01;
-  const km=parseFloat(document.getElementById('fwKm').value)||0;
-  const b=parseFloat(document.getElementById('fwB').value)||0;
+  const km=parseDe(document.getElementById('fwKm').value);
+  const b=parseDe(document.getElementById('fwB').value);
   const sk=parseInt(document.getElementById('sk').value);
   const gvMo=pr*pct+pr*km*.0003;
   const mst=Math.abs(simpleNJ((b+gvMo)*12,sk)/12-simpleNJ(b*12,sk)/12-gvMo);
@@ -847,8 +852,8 @@ function rFW(){
 }
 
 function rFR(){
-  const pr=parseFloat(document.getElementById('frP').value)||0;
-  const b=parseFloat(document.getElementById('frB').value)||0;
+  const pr=parseDe(document.getElementById('frP').value);
+  const b=parseDe(document.getElementById('frB').value);
   const sk=parseInt(document.getElementById('sk').value);
   const gvMo=pr*.0025;
   const mst=Math.abs(simpleNJ((b+gvMo)*12,sk)/12-simpleNJ(b*12,sk)/12-gvMo);
@@ -860,8 +865,8 @@ function rFR(){
 }
 
 function rEZ(){
-  const b=parseFloat(document.getElementById('ezB').value)||0;
-  const ez=parseFloat(document.getElementById('ezE').value)||0;
+  const b=parseDe(document.getElementById('ezB').value);
+  const ez=parseDe(document.getElementById('ezE').value);
   const sk=parseInt(document.getElementById('sk').value);
   const nO=simpleNJ(b*12,sk),nM=simpleNJ(b*12+ez,sk);
   const nez=nM-nO,abz=ez-nez,rate=ez>0?abz/ez:0;
@@ -927,8 +932,10 @@ function setKV(t,btn){
   calc();
 }
 function kvChange(){document.getElementById('kvCust').style.display=document.getElementById('kvKasse').value==='custom'?'block':'none';calc();}
-function syncSl(){document.getElementById('bruttoSl').value=parseFloat(document.getElementById('brutto').value)||0;}
-function syncWN(){document.getElementById('wnSl').value=parseFloat(document.getElementById('wnN').value)||0;}
+function parseDe(s){return parseFloat(String(s).replace(/\./g,'').replace(',','.'))||0;}
+function fmtInput(el){const v=parseDe(el.value);if(v>0)el.value=v.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:2});else el.value='';}
+function rawInput(el){el.value=String(parseDe(el.value)||'').replace('.',',');}
+function syncSl(){document.getElementById('bruttoSl').value=parseDe(document.getElementById('brutto').value)||0;}
 function openMo(){document.getElementById('mo').classList.add('open');}
 function closeMo(){document.getElementById('mo').classList.remove('open');}
 document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeMo();});
