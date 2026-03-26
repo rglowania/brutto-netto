@@ -296,30 +296,30 @@ input[type=range]::-webkit-slider-thumb{
               <button class="seg-btn" onclick="setK(2,this)">2</button>
             </div>
           </div>
-          <div class="field" style="display:flex;justify-content:space-between;align-items:center;flex-direction:row;">
-            <label class="toggle-label">
-              Kirchensteuer
+          <div class="field" style="display:flex;flex-wrap:wrap;gap:16px;flex-direction:row;">
+            <label class="toggle-label" style="gap:8px;">
               <span class="toggle-wrap">
                 <input type="checkbox" id="kirche" class="toggle-cb" onchange="syncToggle(this);toggleBL();calc()">
                 <span class="toggle-track"></span>
                 <span class="toggle-thumb"></span>
               </span>
+              Kirchensteuer
             </label>
-            <label class="toggle-label">
-              RV-befreit
+            <label class="toggle-label" style="gap:8px;">
               <span class="toggle-wrap">
                 <input type="checkbox" id="rvBef" class="toggle-cb" onchange="syncToggle(this);calc()">
                 <span class="toggle-track"></span>
                 <span class="toggle-thumb"></span>
               </span>
+              RV-befreit
             </label>
-            <label class="toggle-label">
-              &gt;23 J., kinderlos
+            <label class="toggle-label" style="gap:8px;">
               <span class="toggle-wrap">
                 <input type="checkbox" id="kinderlos" class="toggle-cb" onchange="syncToggle(this);calc()">
                 <span class="toggle-track"></span>
                 <span class="toggle-thumb"></span>
               </span>
+              &gt;23 J., kinderlos
             </label>
           </div>
           <div class="field" id="bl-row" style="display:none;">
