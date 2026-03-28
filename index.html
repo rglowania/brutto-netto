@@ -201,6 +201,13 @@ input[type=range]::-webkit-slider-thumb{
 .mo-done{display:block;margin:14px 20px 0;padding:10px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;width:calc(100% - 40px);transition:background .2s;}
 .mo-done:hover{background:var(--accent-dim);}
 .opt-row{margin-bottom:12px;}
+/* Balkendiagramm */
+.bar-wrap{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+.bar-track{height:28px;display:flex;overflow:hidden;border:1px solid var(--border);margin:8px 0;}
+.bar-seg{height:100%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;overflow:hidden;white-space:nowrap;transition:width .4s;}
+.bar-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:4px;}
+.bar-legend-item{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.bar-legend-dot{width:8px;height:8px;flex-shrink:0;}
 
 /* Modus-Umschalter */
 .mode-toggle-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:16px;}
@@ -511,6 +518,10 @@ input[type=range]::-webkit-slider-thumb{
           <span class="result-total-label" style="font-weight:600;">Netto</span>
           <span class="result-total-value pos" id="d-netto2">—</span>
         </div>
+        <div class="bar-wrap">
+          <div class="bar-track" id="de-bar-track"></div>
+          <div class="bar-legend" id="de-bar-legend"></div>
+        </div>
       </div>
       <div class="card">
         <div class="card-title">Eckdaten</div>
@@ -540,12 +551,19 @@ input[type=range]::-webkit-slider-thumb{
         <div class="card-title">Gehalt</div>
         <div class="fields">
           <div class="field">
-            <div class="field-label">Bruttogehalt / Monat (CHF)</div>
+            <div class="field-label">Eingabewährung</div>
+            <div class="seg seg-equal">
+              <button class="seg-btn on" id="ch-cur-chf" onclick="chSetCurrency('CHF',this)">CHF</button>
+              <button class="seg-btn" id="ch-cur-eur" onclick="chSetCurrency('EUR',this)">EUR</button>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label" id="ch-label-m">Bruttogehalt / Monat (CHF)</div>
             <input type="text" id="ch-brutto-m" value="6.000" inputmode="decimal" onfocus="chFmtFocus(this)" onblur="chFmtBlur(this)" oninput="chSyncBrutto('m');calcCH()">
             <input type="range" id="ch-bruttoSl" min="0" max="25000" step="100" value="6000" oninput="document.getElementById('ch-brutto-m').value=Number(this.value).toLocaleString('de-DE');chSyncBrutto('sl');calcCH()">
           </div>
           <div class="field">
-            <div class="field-label">Bruttogehalt / Jahr (CHF)</div>
+            <div class="field-label" id="ch-label-j">Bruttogehalt / Jahr (CHF)</div>
             <input type="text" id="ch-brutto-j" value="72.000" inputmode="decimal" onfocus="chFmtFocus(this)" onblur="chFmtBlur(this)" oninput="chSyncBrutto('j');calcCH()">
           </div>
           <div class="field">
@@ -706,7 +724,6 @@ input[type=range]::-webkit-slider-thumb{
         <div class="netto-display">
           <div class="netto-label">Echtes Netto / Monat</div>
           <div><span class="netto-value" id="ch-d-netto-eur-m">—</span><span class="netto-unit">EUR</span></div>
-          <div style="margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);" id="ch-d-netto-chf-sub">—</div>
         </div>
 
         <div class="sub-sep">CH – Sozialversicherung &amp; Quellensteuer</div>
@@ -715,9 +732,16 @@ input[type=range]::-webkit-slider-thumb{
         <div class="sub-sep">DE – Einkommensteuer &middot; ZvE: <span id="ch-d-zve">—</span></div>
         <div id="ch-rows-de-compact"></div>
 
+        <div class="sub-sep">KV &amp; Verfügbares Einkommen</div>
+        <div class="result-row"><span class="rl">KV-Prämie (SWICA)</span><span class="rv neg" id="ch-d-kv-abzug">—</span></div>
+
         <div class="result-total">
           <span class="result-total-label" style="font-weight:600;">Echtes Netto</span>
           <span class="result-total-value pos" id="ch-d-netto2">—</span>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-track" id="ch-bar-track"></div>
+          <div class="bar-legend" id="ch-bar-legend"></div>
         </div>
       </div>
 
@@ -1012,7 +1036,29 @@ function calc(){
   document.getElementById('d-kirche-row').style.display=kircheOn&&a.kJa>0?'flex':'none';
   document.getElementById('d-st').textContent=neg(a.stMo);
   setSumm(bMo,skV,blV,kircheOn,kl);
+  renderBar('de-bar-track','de-bar-legend',[
+    {l:'Netto',v:Math.max(0,nMo),c:'var(--accent)'},
+    {l:'Sozialversicherung',v:a.soz,c:'#3a7a9c'},
+    {l:'Steuern',v:a.stMo,c:'#c4a93a'},
+  ]);
   rEZ();
+}
+
+/* ── Balkendiagramm ── */
+function renderBar(trackId, legendId, segs){
+  const track=document.getElementById(trackId);
+  const legend=document.getElementById(legendId);
+  if(!track||!legend)return;
+  const total=segs.reduce((s,g)=>s+g.v,0);
+  if(total<=0)return;
+  track.innerHTML=segs.map(s=>{
+    const pct=s.v/total*100;
+    return`<div class="bar-seg" style="width:${pct.toFixed(2)}%;background:${s.c};">${pct>=7?pct.toFixed(1)+'%':''}</div>`;
+  }).join('');
+  legend.innerHTML=segs.map(s=>{
+    const pct=s.v/total*100;
+    return`<div class="bar-legend-item"><div class="bar-legend-dot" style="background:${s.c};"></div>${s.l}: ${pct.toFixed(1)} %</div>`;
+  }).join('');
 }
 
 function setSumm(bMo,sk,bl,kirche,kl){
@@ -1097,7 +1143,19 @@ function bvgSparRateAN(alter){if(alter<25)return 0;if(alter<35)return 0.035;if(a
 const BVG_RISIKO_AN_CH=0.005,BVG_RISIKO_AG_CH=0.005;
 function getSwicaPraemie(alter,p){if(alter<19)return p.swicaKV.u18;if(alter<26)return p.swicaKV.u25;return p.swicaKV.ab26;}
 
-let chKirche=false,chKvMode='chf',chPendler=true,chGehaelter=12;
+let chKirche=false,chKvMode='chf',chPendler=true,chGehaelter=12,chCurrency='CHF';
+
+function chSetCurrency(cur,btn){
+  chCurrency=cur;
+  btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const isCHF=cur==='CHF';
+  document.getElementById('ch-label-m').textContent='Bruttogehalt / Monat ('+(isCHF?'CHF':'EUR')+')';
+  document.getElementById('ch-label-j').textContent='Bruttogehalt / Jahr ('+(isCHF?'CHF':'EUR')+')';
+  // Slider max anpassen
+  document.getElementById('ch-bruttoSl').max=isCHF?25000:20000;
+  calcCH();
+}
 
 function chSetGehaelter(n,btn){
   chGehaelter=n;
@@ -1113,10 +1171,23 @@ function chFmtFocus(el){el.value=String(parseDe(el.value)||'').replace(/^0$/,'')
 function chFmtBlur(el){const v=parseDe(el.value);if(v)el.value=v.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:0});}
 function chSyncBrutto(which){
   const faktor=chGehaelter;
-  if(which==='m'||which==='sl'){const m=parseDe(document.getElementById('ch-brutto-m').value);document.getElementById('ch-brutto-j').value=m>0?(m*faktor).toLocaleString('de-DE',{maximumFractionDigits:0}):'';}
-  else if(which==='j'){const j=parseDe(document.getElementById('ch-brutto-j').value);const m=j>0?j/faktor:0;document.getElementById('ch-brutto-m').value=m>0?m.toLocaleString('de-DE',{maximumFractionDigits:0}):'';}
+  const slMax=chCurrency==='CHF'?25000:20000;
+  if(which==='m'||which==='sl'){
+    const m=parseDe(document.getElementById('ch-brutto-m').value);
+    document.getElementById('ch-brutto-j').value=m>0?(m*faktor).toLocaleString('de-DE',{maximumFractionDigits:0}):'';
+    document.getElementById('ch-bruttoSl').value=Math.min(slMax,m);
+  } else if(which==='j'){
+    const j=parseDe(document.getElementById('ch-brutto-j').value);
+    const m=j>0?j/faktor:0;
+    document.getElementById('ch-brutto-m').value=m>0?m.toLocaleString('de-DE',{maximumFractionDigits:0}):'';
+    document.getElementById('ch-bruttoSl').value=Math.min(slMax,m);
+  }
 }
-function chGetBruttoM(){return parseDe(document.getElementById('ch-brutto-m').value)||0;}
+function chGetBruttoM(){
+  const v=parseDe(document.getElementById('ch-brutto-m').value)||0;
+  if(chCurrency==='EUR'){const kurs=getChFxRate();return kurs>0?v/kurs:v;}
+  return v;
+}
 function chSetKirche(v){
   chKirche=v;
   document.getElementById('ch-btn-kk-ja').classList.toggle('on',v);
@@ -1306,9 +1377,9 @@ function calcCH(){
 
   // ── Display: Hero (DE-Stil) ──
   document.getElementById('ch-d-netto-eur-m').textContent=fmt(echtNettoM_EUR);
-  document.getElementById('ch-d-netto-chf-sub').textContent='≈ '+fmtCH(nettoM_CHF,'CHF')+' / Monat (vor KV-Abzug) · '+echtQuote.toFixed(1)+' % von Brutto';
   document.getElementById('ch-d-netto2').textContent=fmt(echtNettoM_EUR)+' €';
   document.getElementById('ch-d-zve').textContent=fmt(zve/12)+' €/Mo';
+  document.getElementById('ch-d-kv-abzug').textContent='−'+fmt(kvAbzugEurM)+' €';
 
   // Kompakte CH-SV Zeilen (wie DE sub-sep Stil)
   const chNegR=v=>v>0?'−'+fmtCH(v,'CHF'):'0,00 CHF';
@@ -1408,6 +1479,12 @@ function calcCH(){
   document.getElementById('ch-s-pendler').textContent=chPendler&&km>0?fmtCH(pendlerPP,'EUR',0):'Nein';
   document.getElementById('ch-s-bvg').textContent=((bvgAnSpar+BVG_RISIKO_AN_CH)*100).toFixed(1)+' %';
   document.getElementById('ch-s-quote').textContent=echtQuote.toFixed(1)+' %';
+  renderBar('ch-bar-track','ch-bar-legend',[
+    {l:'Echtes Netto',v:Math.max(0,echtNettoM_EUR),c:'var(--accent)'},
+    {l:'CH-Sozialversicherung',v:(chAbzuegeAN+chQST_M)*kurs,c:'#3a7a9c'},
+    {l:'DE-Steuern',v:deGesamtM_EUR,c:'#c4a93a'},
+    {l:'KV-Prämie',v:kvAbzugEurM,c:'#7a6a9c'},
+  ]);
 }
 
 /* ── SF-Zeilen ── */
