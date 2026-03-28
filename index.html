@@ -6,9 +6,8 @@
 <title>Bruno · Brutto-Netto 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-
 /* ═══════════════════════════════════════════════════════════════
-   G-DESIGN — Template v1.0
+   G-DESIGN
    ═══════════════════════════════════════════════════════════════ */
 :root,[data-theme="dark"]{
   --bg:#0c1410;--surface:#13201a;--surface2:#192b22;--border:#213328;
@@ -33,6 +32,7 @@ body{
   font-family:'IBM Plex Sans',sans-serif;font-weight:300;
   min-height:100vh;padding:40px 20px 80px;
   transition:background .25s,color .25s;
+  font-feature-settings:"ss01";
 }
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -55,18 +55,13 @@ body::before{
 .theme-btn.active{color:var(--accent);background:var(--accent-dim);}
 .theme-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 header{text-align:center;margin-bottom:40px;}
-.badge{
-  display:inline-block;font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--accent);border:1px solid var(--accent-dim);padding:4px 14px;margin-bottom:18px;
-}
 h1{
   font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);
   font-weight:600;line-height:1.15;color:var(--text);margin-bottom:10px;
 }
 h1 span{color:var(--accent);}
 .subtitle{font-size:12px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:.5px;}
-.variant-toggle{margin-top:16px;display:inline-flex;gap:0;border:1px solid var(--border);}
+.variant-toggle{display:inline-flex;gap:0;border:1px solid var(--border);}
 .variant-btn{
   background:transparent;border:none;padding:7px 20px;
   font-family:'IBM Plex Mono',monospace;font-size:10px;
@@ -76,7 +71,7 @@ h1 span{color:var(--accent);}
 .variant-btn.active{background:var(--accent-dim);color:var(--accent);}
 .card{
   background:var(--surface);border:1px solid var(--border);
-  padding:24px 28px;margin-bottom:16px;position:relative;
+  padding:24px 28px;position:relative;
   transition:background .25s,border-color .25s;
 }
 .card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
@@ -86,7 +81,7 @@ h1 span{color:var(--accent);}
 }
 .accent-card{
   background:var(--surface);border:1px solid var(--accent);
-  padding:28px;margin-bottom:16px;position:relative;
+  padding:28px;position:relative;
   transition:background .25s;
 }
 select,input[type="number"],input[type="text"]{
@@ -136,29 +131,20 @@ input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .result-row .rv{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:400;white-space:nowrap;}
 .result-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;border-top:1px solid var(--accent);margin-top:8px;}
 .result-total-label,.result-total-value{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:400;}
-.note{font-size:10px;color:var(--text-muted);margin-top:14px;line-height:1.7;font-family:'IBM Plex Mono',monospace;}
 footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);opacity:.6;}
 @media(max-width:680px){.card,.accent-card{padding:18px 16px;}}
-
-/* ═══════════════════════════════════════════════════════════════
-   APP-SPEZIFISCH
-   ═══════════════════════════════════════════════════════════════ */
 
 /* Grid */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
 @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
 
-/* Eingabezeilen */
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;margin-bottom:12px;}
-.field-row:last-child{margin-bottom:0;}
-.field-row.full{grid-template-columns:1fr;}
 .field-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
-/* Felder untereinander ohne ungleiche Abstände */
 .fields{display:flex;flex-direction:column;gap:12px;}
 .field{display:flex;flex-direction:column;gap:5px;}
 
-/* Segment-Toggle (Monat/Jahr, GKV/PKV, etc.) */
 .seg{display:inline-flex;border:1px solid var(--border);}
+.seg-equal{display:flex;}
+.seg-equal .seg-btn{flex:1;text-align:center;}
 .seg-btn{
   background:transparent;border:none;padding:5px 14px;cursor:pointer;
   font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;
@@ -167,7 +153,6 @@ footer{text-align:center;padding:32px 0 24px;font-family:'IBM Plex Mono',monospa
 .seg-btn+.seg-btn{border-left:1px solid var(--border);}
 .seg-btn.on{background:var(--accent-dim);color:var(--accent);}
 
-/* Slider */
 input[type=range]{
   width:100%;-webkit-appearance:none;height:2px;
   background:var(--border);outline:none;margin-top:8px;cursor:pointer;
@@ -177,18 +162,15 @@ input[type=range]::-webkit-slider-thumb{
   border-radius:50%;cursor:pointer;border:2px solid var(--bg);
 }
 
-/* Ergebnis-Farben */
 .neg{color:#c0554a;}
 .pos{color:var(--accent);}
 .dim{color:var(--text-muted);}
 
-/* Netto-Headline */
 .netto-display{padding:20px 0 14px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:16px;}
 .netto-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
 .netto-value{font-family:'Playfair Display',serif;font-size:42px;font-weight:600;color:var(--accent);line-height:1;}
 .netto-unit{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--text-muted);margin-left:4px;}
 
-/* Abzüge-Subheader */
 .sub-sep{
   font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;
   text-transform:uppercase;color:var(--text-muted);
@@ -218,9 +200,10 @@ input[type=range]::-webkit-slider-thumb{
 .badge-off{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 8px;letter-spacing:1px;color:var(--text-muted);border:1px solid var(--border);}
 .mo-done{display:block;margin:14px 20px 0;padding:10px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;cursor:pointer;width:calc(100% - 40px);transition:background .2s;}
 .mo-done:hover{background:var(--accent-dim);}
-
-/* Opt. Felder im Rechner */
 .opt-row{margin-bottom:12px;}
+
+/* Modus-Umschalter */
+.mode-toggle-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:16px;}
 </style>
 </head>
 <body>
@@ -241,16 +224,25 @@ input[type=range]::-webkit-slider-thumb{
 
   <header>
     <h1>Brutto–<span>Netto</span></h1>
-    <p class="subtitle">Deutschland &middot; SV + LSt + SolZ &middot; <span id="hdr-jahr">2026</span></p>
-    <div class="variant-toggle">
-      <button class="variant-btn" id="btn-variant-2025" onclick="setJahr(2025,this)">2025</button>
-      <button class="variant-btn active" id="btn-variant-2026" onclick="setJahr(2026,this)">2026</button>
+    <p class="subtitle" id="hdr-subtitle">Deutschland &middot; SV + LSt + SolZ &middot; <span id="hdr-jahr">2026</span></p>
+    <div class="mode-toggle-row">
+      <div class="variant-toggle" id="jahr-toggle">
+        <button class="variant-btn" id="btn-variant-2024" onclick="setJahr(2024,this)">2024</button>
+        <button class="variant-btn" id="btn-variant-2025" onclick="setJahr(2025,this)">2025</button>
+        <button class="variant-btn active" id="btn-variant-2026" onclick="setJahr(2026,this)">2026</button>
+      </div>
+      <div class="variant-toggle">
+        <button class="variant-btn active" id="btn-mode-de" onclick="setModus('de')">🇩🇪 Inländisch</button>
+        <button class="variant-btn" id="btn-mode-ch" onclick="setModus('ch')">🇨🇭 Grenzgänger DE→CH</button>
+      </div>
     </div>
   </header>
 
+  <!-- ══════════════════════════════════════════════════════
+       MODUS: INLÄNDISCH
+       ══════════════════════════════════════════════════════ -->
+  <div id="view-de">
   <div class="two-col">
-
-    <!-- ── LINKE SPALTE: EINGABEN ── -->
     <div class="fields">
 
       <!-- Gehalt -->
@@ -258,16 +250,21 @@ input[type=range]::-webkit-slider-thumb{
         <div class="card-title">Gehalt</div>
         <div class="fields">
           <div class="field">
-            <div class="field-label">Bruttogehalt</div>
-            <input type="text" id="brutto" value="4.000" inputmode="decimal" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="syncSl();calc()">
-            <input type="range" id="bruttoSl" min="0" max="15000" step="50" value="4000" oninput="document.getElementById('brutto').value=Number(this.value).toLocaleString('de-DE');calc()">
+            <div class="field-label">Bruttogehalt / Monat (EUR)</div>
+            <input type="text" id="brutto-m" value="4.000" inputmode="decimal" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="deSyncBrutto('m');calc()">
+            <input type="range" id="bruttoSl" min="0" max="15000" step="50" value="4000" oninput="document.getElementById('brutto-m').value=Number(this.value).toLocaleString('de-DE');deSyncBrutto('sl');calc()">
           </div>
           <div class="field">
-            <div class="field-label">Zeitraum</div>
-            <div class="seg">
-              <button class="seg-btn on" onclick="setZ('monat',this)">Monat</button>
-              <button class="seg-btn" onclick="setZ('jahr',this)">Jahr</button>
+            <div class="field-label">Bruttogehalt / Jahr (EUR)</div>
+            <input type="text" id="brutto-j" value="48.000" inputmode="decimal" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="deSyncBrutto('j');calc()">
+          </div>
+          <div class="field">
+            <div class="field-label">Jahresgehälter</div>
+            <div class="seg seg-equal">
+              <button class="seg-btn on" id="de-g12" onclick="deSetGehaelter(12,this)">12</button>
+              <button class="seg-btn" id="de-g13" onclick="deSetGehaelter(13,this)">13</button>
             </div>
+            <div class="hint" id="de-gehaelter-hint">Jahresgehalt = 12 × Monatsgehalt</div>
           </div>
         </div>
       </div>
@@ -298,27 +295,15 @@ input[type=range]::-webkit-slider-thumb{
           </div>
           <div class="field" style="display:flex;flex-wrap:wrap;gap:16px;flex-direction:row;">
             <label class="toggle-label" style="gap:8px;">
-              <span class="toggle-wrap">
-                <input type="checkbox" id="kirche" class="toggle-cb" onchange="syncToggle(this);toggleBL();calc()">
-                <span class="toggle-track"></span>
-                <span class="toggle-thumb"></span>
-              </span>
+              <span class="toggle-wrap"><input type="checkbox" id="kirche" class="toggle-cb" onchange="syncToggle(this);toggleBL();calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
               Kirchensteuer
             </label>
             <label class="toggle-label" style="gap:8px;">
-              <span class="toggle-wrap">
-                <input type="checkbox" id="rvBef" class="toggle-cb" onchange="syncToggle(this);calc()">
-                <span class="toggle-track"></span>
-                <span class="toggle-thumb"></span>
-              </span>
+              <span class="toggle-wrap"><input type="checkbox" id="rvBef" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
               RV-befreit
             </label>
             <label class="toggle-label" style="gap:8px;">
-              <span class="toggle-wrap">
-                <input type="checkbox" id="kinderlos" class="toggle-cb" onchange="syncToggle(this);calc()">
-                <span class="toggle-track"></span>
-                <span class="toggle-thumb"></span>
-              </span>
+              <span class="toggle-wrap"><input type="checkbox" id="kinderlos" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
               &gt;23 J., kinderlos
             </label>
           </div>
@@ -337,11 +322,7 @@ input[type=range]::-webkit-slider-thumb{
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div class="card-title" style="margin-bottom:0;">Vermögenswirksame Leistungen</div>
           <label class="toggle-label">Vorhanden
-            <span class="toggle-wrap">
-              <input type="checkbox" id="vlOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('vl-body').style.display=this.checked?'block':'none';calc()">
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </span>
+            <span class="toggle-wrap"><input type="checkbox" id="vlOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('vl-body').style.display=this.checked?'block':'none';calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
           </label>
         </div>
         <div id="vl-body" style="display:none;margin-top:14px;">
@@ -389,13 +370,8 @@ input[type=range]::-webkit-slider-thumb{
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div class="card-title" style="margin-bottom:0;">Steuerfreie Zahlungen</div>
-          <label class="toggle-label">
-            Vorhanden
-            <span class="toggle-wrap">
-              <input type="checkbox" id="sfOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('sf-body').style.display=this.checked?'block':'none';calc()">
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </span>
+          <label class="toggle-label">Vorhanden
+            <span class="toggle-wrap"><input type="checkbox" id="sfOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('sf-body').style.display=this.checked?'block':'none';calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
           </label>
         </div>
         <div id="sf-body" style="display:none;margin-top:14px;">
@@ -405,117 +381,58 @@ input[type=range]::-webkit-slider-thumb{
         </div>
       </div>
 
-      <!-- Optionale Felder (via Modal) -->
+      <!-- Optionale Felder -->
       <div id="bezSec" class="card" style="display:none;">
         <div class="card-title">Zusätzliche Bezüge</div>
         <div class="fields">
-          <div class="field" id="rSF" style="display:none;">
-            <div class="field-label">Steuerfreie Bezüge / Mo</div>
-            <input type="number" id="sfVal" value="0" min="0" oninput="calc()">
-            <div class="hint">Schichtzuschlag, Reisekosten …</div>
-          </div>
-          <div class="field" id="rGW" style="display:none;">
-            <div class="field-label">Geldwerter Vorteil / Mo</div>
-            <input type="number" id="gwVal" value="0" min="0" oninput="calc()">
-            <div class="hint">Sachbezüge z.B. Geschenke</div>
-          </div>
-          <div class="field" id="rBAV" style="display:none;">
-            <div class="field-label">Betriebliche Altersvorsorge / Mo</div>
-            <input type="number" id="bavVal" value="0" min="0" oninput="calc()">
-            <div class="hint" id="bavHint">Steuerfrei bis 292 €/Mo</div>
-          </div>
-          <div class="field" id="rVWL" style="display:none;">
-            <div class="field-label">VWL AG-Anteil / Mo</div>
-            <input type="number" id="vwlVal" value="0" min="0" oninput="calc()">
-            <div class="hint">z.B. Bausparvertrag</div>
-          </div>
+          <div class="field" id="rSF" style="display:none;"><div class="field-label">Steuerfreie Bezüge / Mo</div><input type="number" id="sfVal" value="0" min="0" oninput="calc()"><div class="hint">Schichtzuschlag, Reisekosten …</div></div>
+          <div class="field" id="rGW" style="display:none;"><div class="field-label">Geldwerter Vorteil / Mo</div><input type="number" id="gwVal" value="0" min="0" oninput="calc()"><div class="hint">Sachbezüge z.B. Geschenke</div></div>
+          <div class="field" id="rBAV" style="display:none;"><div class="field-label">Betriebliche Altersvorsorge / Mo</div><input type="number" id="bavVal" value="0" min="0" oninput="calc()"><div class="hint" id="bavHint">Steuerfrei bis 292 €/Mo</div></div>
+          <div class="field" id="rVWL" style="display:none;"><div class="field-label">VWL AG-Anteil / Mo</div><input type="number" id="vwlVal" value="0" min="0" oninput="calc()"><div class="hint">z.B. Bausparvertrag</div></div>
         </div>
       </div>
       <div id="abzSec" class="card" style="display:none;">
         <div class="card-title">Zusätzliche Abzüge</div>
         <div class="fields">
-          <div class="field" id="rNA" style="display:none;">
-            <div class="field-label">Nettoabzüge / Mo</div>
-            <input type="number" id="naVal" value="0" min="0" oninput="calc()">
-            <div class="hint">z.B. Fitnessstudio</div>
-          </div>
+          <div class="field" id="rNA" style="display:none;"><div class="field-label">Nettoabzüge / Mo</div><input type="number" id="naVal" value="0" min="0" oninput="calc()"><div class="hint">z.B. Fitnessstudio</div></div>
         </div>
       </div>
       <div id="stSec" class="card" style="display:none;">
         <div class="card-title">Steuereinstellungen</div>
         <div class="fields">
-          <div class="field" id="rFB" style="display:none;">
-            <div class="field-label">Steuerfreibetrag / Jahr</div>
-            <input type="number" id="fbVal" value="0" min="0" oninput="calc()">
-            <div class="hint">Falls Antrag gestellt</div>
-          </div>
+          <div class="field" id="rFB" style="display:none;"><div class="field-label">Steuerfreibetrag / Jahr</div><input type="number" id="fbVal" value="0" min="0" oninput="calc()"><div class="hint">Falls Antrag gestellt</div></div>
           <div class="field" id="rMJ" style="display:none;">
-            <label class="toggle-label">
-              Mini-Job
-              <span class="toggle-wrap">
-                <input type="checkbox" id="isMJ" class="toggle-cb" onchange="syncToggle(this);calc()">
-                <span class="toggle-track"></span>
-                <span class="toggle-thumb"></span>
-              </span>
-            </label>
+            <label class="toggle-label"><span class="toggle-wrap"><input type="checkbox" id="isMJ" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>Mini-Job</label>
             <div class="hint" id="mjHint">Bis 556 €/Mo</div>
           </div>
           <div class="field" id="rUEB" style="display:none;">
-            <label class="toggle-label">
-              Übergangsbereich
-              <span class="toggle-wrap">
-                <input type="checkbox" id="isUEB" class="toggle-cb" onchange="syncToggle(this);calc()">
-                <span class="toggle-track"></span>
-                <span class="toggle-thumb"></span>
-              </span>
-            </label>
+            <label class="toggle-label"><span class="toggle-wrap"><input type="checkbox" id="isUEB" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>Übergangsbereich</label>
             <div class="hint" id="uebHint">556–2.000 €/Mo</div>
           </div>
         </div>
       </div>
-
-      <div>
-        <button class="btn btn-primary" onclick="openMo()">⚙ Weitere Optionen</button>
-      </div>
-
-
+      <div><button class="btn btn-primary" onclick="openMo()">⚙ Weitere Optionen</button></div>
 
       <!-- Firmenwagen -->
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div class="card-title" style="margin-bottom:0;">Firmenwagen</div>
           <label class="toggle-label">Ich habe einen
-            <span class="toggle-wrap">
-              <input type="checkbox" id="fwOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fw-body').style.display=this.checked?'block':'none';rFW()">
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </span>
+            <span class="toggle-wrap"><input type="checkbox" id="fwOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fw-body').style.display=this.checked?'block':'none';rFW()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
           </label>
         </div>
         <div id="fw-body" style="display:none;margin-top:14px;">
           <div class="fields">
-            <div class="field">
-              <div class="field-label">Bruttolistenpreis</div>
-              <input type="text" id="fwP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
-            </div>
-            <div class="field">
-              <div class="field-label">Fahrzeugtyp</div>
+            <div class="field"><div class="field-label">Bruttolistenpreis</div><input type="text" id="fwP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()"></div>
+            <div class="field"><div class="field-label">Fahrzeugtyp</div>
               <select id="fwT" onchange="rFW()">
                 <option value="0.01">Verbrenner / Hybrid (1,0 %)</option>
                 <option value="0.005">Elektro &gt; 100.000 € (0,5 %)</option>
                 <option value="0.0025">Elektro ≤ 100.000 € (0,25 %)</option>
               </select>
             </div>
-            <div class="field">
-              <div class="field-label">Entfernung Wohnung–Arbeit</div>
-              <input type="text" id="fwKm" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
-              <div class="hint">km (für 0,03%-Fahrtkostenanteil)</div>
-            </div>
-            <div class="field">
-              <div class="field-label">Bruttogehalt / Mo</div>
-              <input type="text" id="fwB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()">
-              <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
-            </div>
+            <div class="field"><div class="field-label">Entfernung Wohnung–Arbeit</div><input type="text" id="fwKm" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()"><div class="hint">km (für 0,03%-Fahrtkostenanteil)</div></div>
+            <div class="field"><div class="field-label">Bruttogehalt / Mo</div><input type="text" id="fwB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFW()"><div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div></div>
           </div>
           <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
             <div class="result-row"><span class="rl">GWV gesamt / Mo</span><span class="rv neg" id="fw-gv">—</span></div>
@@ -531,24 +448,13 @@ input[type=range]::-webkit-slider-thumb{
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div class="card-title" style="margin-bottom:0;">Firmenrad</div>
           <label class="toggle-label">Ich habe eines
-            <span class="toggle-wrap">
-              <input type="checkbox" id="frOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fr-body').style.display=this.checked?'block':'none';rFR()">
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </span>
+            <span class="toggle-wrap"><input type="checkbox" id="frOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('fr-body').style.display=this.checked?'block':'none';rFR()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
           </label>
         </div>
         <div id="fr-body" style="display:none;margin-top:14px;">
           <div class="fields">
-            <div class="field">
-              <div class="field-label">Bruttolistenpreis Fahrrad / E-Bike</div>
-              <input type="text" id="frP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()">
-            </div>
-            <div class="field">
-              <div class="field-label">Bruttogehalt / Mo</div>
-              <input type="text" id="frB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()">
-              <div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div>
-            </div>
+            <div class="field"><div class="field-label">Bruttolistenpreis Fahrrad / E-Bike</div><input type="text" id="frP" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()"></div>
+            <div class="field"><div class="field-label">Bruttogehalt / Mo</div><input type="text" id="frB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rFR()"><div class="hint">Für Grenzsteuersatz der GWV-Mehrbelastung</div></div>
           </div>
           <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
             <div class="result-row"><span class="rl">GWV (0,25 %) / Mo</span><span class="rv neg" id="fr-gv">—</span></div>
@@ -564,25 +470,13 @@ input[type=range]::-webkit-slider-thumb{
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div class="card-title" style="margin-bottom:0;">Einmalzahlung</div>
           <label class="toggle-label">Ich habe eine
-            <span class="toggle-wrap">
-              <input type="checkbox" id="ezOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('ez-body').style.display=this.checked?'block':'none';">
-              <span class="toggle-track"></span>
-              <span class="toggle-thumb"></span>
-            </span>
+            <span class="toggle-wrap"><input type="checkbox" id="ezOn" class="toggle-cb" onchange="syncToggle(this);document.getElementById('ez-body').style.display=this.checked?'block':'none';"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
           </label>
         </div>
         <div id="ez-body" style="display:none;margin-top:14px;">
           <div class="fields">
-            <div class="field">
-              <div class="field-label">Laufendes Brutto / Mo</div>
-              <input type="text" id="ezB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()">
-              <div class="hint">ohne Einmalzahlung</div>
-            </div>
-            <div class="field">
-              <div class="field-label">Einmalzahlung brutto</div>
-              <input type="text" id="ezE" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()">
-              <div class="hint">13. Gehalt, Bonus, Prämie …</div>
-            </div>
+            <div class="field"><div class="field-label">Laufendes Brutto / Mo</div><input type="text" id="ezB" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()"><div class="hint">ohne Einmalzahlung</div></div>
+            <div class="field"><div class="field-label">Einmalzahlung brutto</div><input type="text" id="ezE" value="" inputmode="decimal" placeholder="0" onfocus="rawInput(this)" onblur="fmtInput(this)" oninput="rEZ()"><div class="hint">13. Gehalt, Bonus, Prämie …</div></div>
           </div>
           <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
             <div class="result-row"><span class="rl">Einmalzahlung brutto</span><span class="rv dim" id="ez-b">—</span></div>
@@ -593,38 +487,31 @@ input[type=range]::-webkit-slider-thumb{
         </div>
       </div>
 
-    </div><!-- /linke Spalte -->
+    </div><!-- /linke Spalte DE -->
 
-    <!-- ── RECHTE SPALTE: ERGEBNIS ── -->
+    <!-- Rechte Spalte DE -->
     <div class="fields">
-
-      <!-- Netto-Ergebnis -->
       <div class="accent-card">
         <div class="netto-display">
           <div class="netto-label">Netto / Monat</div>
           <div><span class="netto-value" id="d-netto">—</span><span class="netto-unit">EUR</span></div>
         </div>
-
         <div class="sub-sep">Sozialversicherung</div>
         <div class="result-row"><span class="rl">Rentenversicherung</span><span class="rv neg" id="d-rv">—</span></div>
         <div class="result-row"><span class="rl">Arbeitslosenversicherung</span><span class="rv neg" id="d-av">—</span></div>
         <div class="result-row"><span class="rl">Krankenversicherung</span><span class="rv neg" id="d-kv">—</span></div>
         <div class="result-row"><span class="rl">Pflegeversicherung</span><span class="rv neg" id="d-pv">—</span></div>
         <div class="result-row"><span class="rl">Σ&nbsp;Sozialabgaben</span><span class="rv neg" id="d-soz">—</span></div>
-
         <div class="sub-sep">Steuern &middot; ZvE: <span id="d-zve">—</span></div>
         <div class="result-row"><span class="rl">Lohnsteuer (SK <span id="d-sk">1</span>)</span><span class="rv neg" id="d-lst">—</span></div>
         <div class="result-row"><span class="rl">Solidaritätszuschlag</span><span class="rv neg" id="d-solz">—</span></div>
         <div class="result-row" id="d-kirche-row" style="display:none"><span class="rl">Kirchensteuer</span><span class="rv neg" id="d-kirche">—</span></div>
         <div class="result-row"><span class="rl">Σ&nbsp;Steuern</span><span class="rv neg" id="d-st">—</span></div>
-
         <div class="result-total">
           <span class="result-total-label" style="font-weight:600;">Netto</span>
           <span class="result-total-value pos" id="d-netto2">—</span>
         </div>
       </div>
-
-      <!-- Übersicht -->
       <div class="card">
         <div class="card-title">Eckdaten</div>
         <div class="result-row"><span class="rl">Brutto / Monat</span><span class="rv" id="s-brutto">—</span></div>
@@ -637,21 +524,281 @@ input[type=range]::-webkit-slider-thumb{
         <div class="result-row"><span class="rl">Krankenkasse</span><span class="rv" id="s-kasse">—</span></div>
         <div class="result-row"><span class="rl">&gt;23 J., kinderlos</span><span class="rv" id="s-alter">—</span></div>
       </div>
+    </div>
+  </div>
+  </div><!-- /view-de -->
 
-    </div><!-- /rechte Spalte -->
+  <!-- ══════════════════════════════════════════════════════
+       MODUS: GRENZGÄNGER DE→CH
+       ══════════════════════════════════════════════════════ -->
+  <div id="view-ch" style="display:none;">
+  <div class="two-col">
+    <div class="fields">
 
-  </div><!-- /two-col -->
+      <!-- Lohn CH -->
+      <div class="card">
+        <div class="card-title">Gehalt</div>
+        <div class="fields">
+          <div class="field">
+            <div class="field-label">Bruttogehalt / Monat (CHF)</div>
+            <input type="text" id="ch-brutto-m" value="6.000" inputmode="decimal" onfocus="chFmtFocus(this)" onblur="chFmtBlur(this)" oninput="chSyncBrutto('m');calcCH()">
+            <input type="range" id="ch-bruttoSl" min="0" max="25000" step="100" value="6000" oninput="document.getElementById('ch-brutto-m').value=Number(this.value).toLocaleString('de-DE');chSyncBrutto('sl');calcCH()">
+          </div>
+          <div class="field">
+            <div class="field-label">Bruttogehalt / Jahr (CHF)</div>
+            <input type="text" id="ch-brutto-j" value="72.000" inputmode="decimal" onfocus="chFmtFocus(this)" onblur="chFmtBlur(this)" oninput="chSyncBrutto('j');calcCH()">
+          </div>
+          <div class="field">
+            <div class="field-label">Jahresgehälter</div>
+            <div class="seg seg-equal">
+              <button class="seg-btn on" id="ch-g12" onclick="chSetGehaelter(12,this)">12</button>
+              <button class="seg-btn" id="ch-g13" onclick="chSetGehaelter(13,this)">13</button>
+            </div>
+            <div class="hint" id="ch-gehaelter-hint">Jahresgehalt = 12 × Monatsgehalt</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Wechselkurs</div>
+            <div id="ch-fx-badge" class="hint" style="background:var(--accent-dim);border:1px solid var(--border);padding:4px 8px;color:var(--accent-lt);margin-top:0;">wird geladen…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Person & Steuer CH -->
+      <div class="card">
+        <div class="card-title">Persönliche Angaben</div>
+        <div class="fields">
+          <div class="field">
+            <div class="field-label">Alter</div>
+            <input type="number" id="ch-alter" value="30" min="18" max="70" oninput="chOnAlterChange()">
+            <div class="hint">Bestimmt BVG-Sparrate und SWICA-Prämie</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Steuerklasse (DE)</div>
+            <select id="ch-sk" onchange="calcCH()">
+              <option value="1">I – Ledig</option>
+              <option value="2">II – Alleinerziehend</option>
+              <option value="3">III – Verheiratet, höheres Einkommen</option>
+              <option value="4">IV – Verheiratet, gleiches Einkommen</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Kirchensteuer</div>
+            <div class="seg seg-equal">
+              <button class="seg-btn" id="ch-btn-kk-ja" onclick="chSetKirche(true,this)">Ja (8 %)</button>
+              <button class="seg-btn on" id="ch-btn-kk-nein" onclick="chSetKirche(false,this)">Nein</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CH-SV -->
+      <div class="card">
+        <div class="card-title">CH Sozialversicherung AN</div>
+        <div class="fields">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">Gesetzlich fixiert (jahresabhängig)</div>
+          <div class="field">
+            <div class="field-label">AHV / IV / EO</div>
+            <input type="number" id="ch-ahv-disp" disabled>
+            <div class="hint" id="ch-ahv-hint">Gesetzlich</div>
+          </div>
+          <div class="field">
+            <div class="field-label">ALV</div>
+            <input type="number" id="ch-alv-disp" disabled>
+            <div class="hint">bis CHF 148'200/J.</div>
+          </div>
+          <div class="field">
+            <div class="field-label">KTG AN %</div>
+            <input type="number" id="ch-ktg-an" value="0" step="0.05" min="0" max="3" oninput="calcCH()">
+            <div class="hint">AN-Anteil Prämie, branchenabhängig</div>
+          </div>
+          <div class="field">
+            <div class="field-label">NBUV AN %</div>
+            <input type="number" id="ch-nbuv-an" value="0" step="0.05" min="0" max="3" oninput="calcCH()">
+            <div class="hint">50 % der Gesamtprämie (AN+AG) als WK absetzbar</div>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">BVG Pensionskasse</div>
+          <div class="field">
+            <div class="field-label">BVG AN-Beitrag</div>
+            <input type="number" id="ch-bvg-disp" disabled placeholder="aus Alter">
+            <div class="hint" id="ch-bvg-hint">Spar + Risiko auf koordinierten Lohn</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AG-Beiträge -->
+      <div class="card">
+        <div class="card-title">AG-Beiträge (steuerpflichtig)</div>
+        <div class="fields">
+          <div class="field">
+            <div class="field-label">AG-Anteil KTG / Monat (CHF)</div>
+            <input type="number" id="ch-ktg-ag" value="0" step="1" min="0" oninput="calcCH()">
+            <div class="hint">Geldwerter Vorteil → erhöht maßgebenden Lohn</div>
+          </div>
+          <div class="field">
+            <div class="field-label">AG-Anteil NBUV / Monat (CHF)</div>
+            <input type="number" id="ch-nbuv-ag" value="0" step="1" min="0" oninput="calcCH()">
+            <div class="hint">Geldwerter Vorteil → 50 % der Gesamtprämie als WK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KV & WK -->
+      <div class="card">
+        <div class="card-title">Krankenversicherung &amp; Werbungskosten</div>
+        <div class="fields">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">SWICA Grenzgänger-KV</div>
+          <div class="field">
+            <div class="field-label">Monatsprämie (CHF)</div>
+            <input type="number" id="ch-kv" step="1" min="0" oninput="calcCH()">
+            <div class="hint" id="ch-kv-hint">Vorausgefüllt: SWICA-Tarif nach Jahr &amp; Alter</div>
+          </div>
+          <div class="field">
+            <div class="field-label">KV-Abzug für Netto (EUR)</div>
+            <div class="seg">
+              <button class="seg-btn on" id="ch-btn-kv-chf" onclick="chSetKvMode('chf',this)">CHF→EUR</button>
+              <button class="seg-btn" id="ch-btn-kv-eur" onclick="chSetKvMode('eur',this)">Eigener EUR</button>
+            </div>
+          </div>
+          <div class="field" id="ch-kv-eur-wrap" style="display:none;">
+            <div class="field-label">Monatsprämie EUR</div>
+            <input type="number" id="ch-kv-praemie-eur" step="1" min="0" placeholder="z.B. 230" oninput="calcCH()">
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">Homeoffice (DE)</div>
+          <div class="field">
+            <div class="field-label">Homeoffice-Tage / Jahr</div>
+            <input type="number" id="ch-ho-tage" value="0" min="0" max="210" oninput="chOnHoChange();calcCH()">
+            <div class="hint">6 €/Tag, max. 210 Tage = 1.260 €/J. (§4 Abs.5 Nr.6c EStG)</div>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">Pendlerpauschale (DE)</div>
+          <div class="field">
+            <div class="field-label">Pendlerpauschale</div>
+            <div class="seg">
+              <button class="seg-btn on" id="ch-btn-pend-ja" onclick="chSetPendler(true)">Ja</button>
+              <button class="seg-btn" id="ch-btn-pend-nein" onclick="chSetPendler(false)">Nein</button>
+            </div>
+          </div>
+          <div class="field" id="ch-pendler-km-wrap">
+            <div class="field-label">Arbeitsweg einfach (km)</div>
+            <input type="number" id="ch-km" value="20" min="0" max="300" oninput="calcCH()">
+            <div class="hint" id="ch-km-hint"></div>
+          </div>
+          <div class="field" id="ch-pendler-tage-wrap">
+            <div class="field-label">Pendel-Arbeitstage / Jahr</div>
+            <input type="number" id="ch-tage" value="240" min="0" max="365" oninput="calcCH()">
+            <div class="hint">Arbeitstage gesamt − Homeoffice-Tage</div>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);opacity:.7;padding-bottom:6px;border-bottom:1px solid var(--border);">Weitere Werbungskosten</div>
+          <div class="field">
+            <div class="field-label">Weitere WK / Jahr (EUR)</div>
+            <input type="number" id="ch-weitere-wk" value="0" step="50" min="0" oninput="calcCH()">
+            <div class="hint">Arbeitsmittel, Fachliteratur, Gewerkschaft, Fortbildung</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /linke Spalte CH -->
+
+    <!-- Rechte Spalte CH – DE-Design -->
+    <div class="fields">
+
+      <!-- Haupt-Ergebnis (wie DE accent-card) -->
+      <div class="accent-card">
+        <div class="netto-display">
+          <div class="netto-label">Echtes Netto / Monat</div>
+          <div><span class="netto-value" id="ch-d-netto-eur-m">—</span><span class="netto-unit">EUR</span></div>
+          <div style="margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);" id="ch-d-netto-chf-sub">—</div>
+        </div>
+
+        <div class="sub-sep">CH – Sozialversicherung &amp; Quellensteuer</div>
+        <div id="ch-rows-sv-compact"></div>
+
+        <div class="sub-sep">DE – Einkommensteuer &middot; ZvE: <span id="ch-d-zve">—</span></div>
+        <div id="ch-rows-de-compact"></div>
+
+        <div class="result-total">
+          <span class="result-total-label" style="font-weight:600;">Echtes Netto</span>
+          <span class="result-total-value pos" id="ch-d-netto2">—</span>
+        </div>
+      </div>
+
+      <!-- Eckdaten -->
+      <div class="card">
+        <div class="card-title">Eckdaten</div>
+        <div class="result-row"><span class="rl">Bruttolohn / Mo (CHF)</span><span class="rv" id="ch-s-brutto">—</span></div>
+        <div class="result-row"><span class="rl">Bruttolohn / Mo (EUR)</span><span class="rv" id="ch-s-brutto-eur">—</span></div>
+        <div class="result-row"><span class="rl">Steuerjahr</span><span class="rv" id="ch-s-jahr">2026</span></div>
+        <div class="result-row"><span class="rl">Steuerklasse</span><span class="rv" id="ch-s-sk">—</span></div>
+        <div class="result-row"><span class="rl">Wechselkurs</span><span class="rv" id="ch-s-kurs">—</span></div>
+        <div class="result-row"><span class="rl">Kirchensteuer</span><span class="rv" id="ch-s-kirche">—</span></div>
+        <div class="result-row"><span class="rl">Pendlerpauschale / J</span><span class="rv" id="ch-s-pendler">—</span></div>
+        <div class="result-row"><span class="rl">BVG-Sparbeitrag AN</span><span class="rv" id="ch-s-bvg">—</span></div>
+        <div class="result-row"><span class="rl">Nettoquote</span><span class="rv" id="ch-s-quote">—</span></div>
+      </div>
+
+      <!-- Detail: CH-Abzüge -->
+      <div class="card">
+        <div class="card-title">CH – Abzüge Arbeitnehmer (Detail)</div>
+        <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Position</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Monat</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Jahr</span>
+        </div>
+        <div id="ch-rows-sv"></div>
+      </div>
+
+      <!-- Detail: DE-Steuer -->
+      <div class="card">
+        <div class="card-title">DE – Einkommensteuer (Detail)</div>
+        <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Position</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Monat</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Jahr</span>
+        </div>
+        <div id="ch-rows-de"></div>
+      </div>
+
+      <!-- Detail: AG-Beiträge -->
+      <div class="card">
+        <div class="card-title">Steuerpflichtige AG-Beiträge</div>
+        <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Position</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Monat</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Jahr</span>
+        </div>
+        <div id="ch-rows-ag"></div>
+      </div>
+
+      <!-- Detail: KV & Netto -->
+      <div class="card">
+        <div class="card-title">KV &amp; Verfügbares Einkommen</div>
+        <div style="display:grid;grid-template-columns:1fr 80px 80px;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);">Position</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Monat</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:right;">/ Jahr</span>
+        </div>
+        <div id="ch-rows-kv"></div>
+      </div>
+
+      <!-- Info-Box -->
+      <div class="card">
+        <div class="card-title">Hinweise zur Berechnung</div>
+        <div id="ch-info-box" class="hint" style="line-height:1.9;"></div>
+      </div>
+
+    </div><!-- /rechte Spalte CH -->
+  </div>
+  </div><!-- /view-ch -->
 
 </div><!-- /container -->
 
 <footer>
-  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:8px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:8px;line-height:1.6;max-width:640px;margin-left:auto;margin-right:auto;">
     Alle Berechnungen sind Näherungswerte auf Basis von §&thinsp;32a EStG und den angegebenen Beitragssätzen. Individuelle Faktoren wie Progressionsvorbehalt oder Freibeträge aus anderen Einkünften bleiben unberücksichtigt. Kein Ersatz für individuelle Steuerberatung · Alle Angaben ohne Gewähr
   </div>
   &copy; Robin Glowania
 </footer>
 
-<!-- MODAL -->
+<!-- MODAL DE -->
 <div class="mo-overlay" id="mo">
   <div class="mo-box">
     <div class="mo-head">
@@ -692,21 +839,70 @@ function syncToggle(cb){
 }
 document.querySelectorAll('.toggle-cb').forEach(cb=>{syncToggle(cb);cb.addEventListener('change',function(){syncToggle(this);});});
 
-/* ── Jahreswerte ── */
+/* ── Modus ── */
+let modus='de';
+function setModus(m){
+  modus=m;
+  document.getElementById('view-de').style.display=m==='de'?'block':'none';
+  document.getElementById('view-ch').style.display=m==='ch'?'block':'none';
+  document.getElementById('btn-mode-de').classList.toggle('active',m==='de');
+  document.getElementById('btn-mode-ch').classList.toggle('active',m==='ch');
+  if(m==='de'){
+    document.getElementById('hdr-subtitle').innerHTML='Deutschland &middot; SV + LSt + SolZ &middot; <span id="hdr-jahr">'+jahr+'</span>';
+  } else {
+    document.getElementById('hdr-subtitle').textContent='Grenzgänger DE\u2192CH · Art. 15a DBA · '+jahr;
+    chInitYear();
+  }
+}
+
+/* ── Jahreswerte DE ── */
 const JAHRE={
   2026:{GFB:12084,BBG_RV:7300,BBG_KV:5512.5,RV:.093,AV:.013,KV_AN:.073,PV_BASE:.01775,WK:1230,KIND_FB:9600,ENTL_SK2:4260,SOLZ_FREI:18130,MJ_GRENZE:556,UEB_MAX:2000,BAV_MAX:292,
     kassen:[{v:'2.50',t:'Ø GKV-Zusatzbeitrag · 2,50 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.69',t:'AOK (Ø) · 2,69 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.50',t:'Barmer · 1,50 %'},{v:'1.58',t:'KKH · 1,58 %'},{v:'2.49',t:'IKK classic · 2,49 %'},{v:'custom',t:'Manuell …'}]},
   2025:{GFB:12084,BBG_RV:7300,BBG_KV:5512.5,RV:.093,AV:.013,KV_AN:.073,PV_BASE:.01775,WK:1230,KIND_FB:9600,ENTL_SK2:4260,SOLZ_FREI:18130,MJ_GRENZE:556,UEB_MAX:2000,BAV_MAX:292,
-    kassen:[{v:'2.45',t:'Ø GKV-Zusatzbeitrag · 2,45 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.59',t:'AOK (Ø) · 2,59 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.50',t:'Barmer · 1,50 %'},{v:'1.58',t:'KKH · 1,58 %'},{v:'2.49',t:'IKK classic · 2,49 %'},{v:'custom',t:'Manuell …'}]}
+    kassen:[{v:'2.45',t:'Ø GKV-Zusatzbeitrag · 2,45 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.59',t:'AOK (Ø) · 2,59 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.50',t:'Barmer · 1,50 %'},{v:'1.58',t:'KKH · 1,58 %'},{v:'2.49',t:'IKK classic · 2,49 %'},{v:'custom',t:'Manuell …'}]},
+  2024:{GFB:11604,BBG_RV:7550,BBG_KV:5175,RV:.093,AV:.013,KV_AN:.073,PV_BASE:.01700,WK:1230,KIND_FB:9312,ENTL_SK2:4260,SOLZ_FREI:17543,MJ_GRENZE:538,UEB_MAX:2000,BAV_MAX:292,
+    kassen:[{v:'2.43',t:'Ø GKV-Zusatzbeitrag · 2,43 %'},{v:'1.80',t:'Techniker Krankenkasse · 1,80 %'},{v:'2.20',t:'DAK-Gesundheit · 2,20 %'},{v:'2.59',t:'AOK (Ø) · 2,59 %'},{v:'2.99',t:'AOK Baden-Württemberg · 2,99 %'},{v:'1.20',t:'Barmer · 1,20 %'},{v:'1.98',t:'KKH · 1,98 %'},{v:'1.60',t:'IKK classic · 1,60 %'},{v:'custom',t:'Manuell …'}]}
 };
 const BL_NAME={west:'Anderes Bundesland (9%)',BY:'BY / BW (8%)',BW:'BY / BW (8%)'};
 const KI8=['BW','BY'];
-let jahr=2026,zeitraum='monat',kinder=0,kvTyp='g';
+let jahr=2026,kinder=0,kvTyp='g';
 const FT={sf:false,gw:false,bav:false,vwl:false,na:false,fb:false,ueb:false,mj:false};
 function P(){return JAHRE[jahr];}
 
+/* ── Formatierung ── */
 function fmt(n,d=2){return Math.abs(n||0).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});}
 function neg(v){return v>0?'−'+fmt(v)+' €':'0,00 €';}
+function parseDe(s){return parseFloat(String(s).replace(/\./g,'').replace(',','.'))||0;}
+function fmtInput(el){const v=parseDe(el.value);if(v>0)el.value=v.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:2});else el.value='';}
+function rawInput(el){el.value=String(parseDe(el.value)||'').replace('.',',');}
+function syncSl(){document.getElementById('bruttoSl').value=Math.min(15000,parseDe(document.getElementById('brutto-m').value)||0);}
+let deGehaelter=12;
+function deSyncBrutto(which){
+  const faktor=deGehaelter;
+  if(which==='m'||which==='sl'){
+    const m=parseDe(document.getElementById('brutto-m').value);
+    document.getElementById('brutto-j').value=m>0?(m*faktor).toLocaleString('de-DE',{maximumFractionDigits:0}):'';
+    document.getElementById('bruttoSl').value=Math.min(15000,m);
+  } else if(which==='j'){
+    const j=parseDe(document.getElementById('brutto-j').value);
+    const m=j>0?j/faktor:0;
+    document.getElementById('brutto-m').value=m>0?m.toLocaleString('de-DE',{maximumFractionDigits:0}):'';
+    document.getElementById('bruttoSl').value=Math.min(15000,m);
+  }
+}
+function deSetGehaelter(n,btn){
+  deGehaelter=n;
+  btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('de-gehaelter-hint').textContent='Jahresgehalt = '+n+' × Monatsgehalt';
+  // Jahresfeld neu berechnen ausgehend vom Monatsfeld
+  deSyncBrutto('m');
+  calc();
+}
+function deGetBruttoM(){return parseDe(document.getElementById('brutto-m').value)||0;}
+
+/* ── DE: Steuerformeln ── */
 function estG(x){const p=P();if(x<=p.GFB)return 0;if(x<=17430){const y=(x-p.GFB)/10000;return(922.98*y+1400)*y;}if(x<=68429){const z=(x-17430)/10000;return(181.19*z+2397)*z+1025.38;}if(x<=278825)return .42*x-10602.13;return .45*x-18936.88;}
 function est(zvE,sk){if(zvE<=0)return 0;return sk==3?estG(zvE/2)*2:estG(zvE);}
 function solz(e){const s=P().SOLZ_FREI;if(e<=0||e<=s)return 0;return Math.min(e*.055,(e-s)*.119);}
@@ -714,29 +910,43 @@ function kiSatz(bl){return KI8.includes(bl)?.08:.09;}
 function kvZus(){const k=document.getElementById('kvKasse').value;return k==='custom'?(parseFloat(document.getElementById('kvZ').value)||0)/100:parseFloat(k)/100;}
 function pvEff(){const p=P();return Math.max(0,p.PV_BASE+(document.getElementById('kinderlos').checked?.006:0)-(kinder>=2?Math.min(kinder-1,4)*.0025:0));}
 
-function setJahr(y,btn){
-  jahr=y;
-  document.querySelectorAll('.variant-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('hdr-jahr').textContent=y;
-  document.getElementById('s-jahr').textContent=y;
-  const sel=document.getElementById('kvKasse'),old=sel.value;
-  sel.innerHTML='';
-  P().kassen.forEach(k=>{const o=document.createElement('option');o.value=k.v;o.textContent=k.t;sel.appendChild(o);});
-  sel.value=old;if(!sel.value)sel.selectedIndex=0;
-  document.getElementById('bavHint').textContent='Steuerfrei bis '+P().BAV_MAX+' €/Mo';
-  document.getElementById('mjHint').textContent='Bis '+P().MJ_GRENZE+' €/Mo';
-  document.getElementById('uebHint').textContent=P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
-  document.getElementById('mo-mj-sub').textContent='Relevant bis '+P().MJ_GRENZE+' €/Mo';
-  document.getElementById('mo-ueb-sub').textContent='Relevant bei '+P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
-  calc();rFW();rFR();rEZ();
+/* ── DE: Grenzsteuersatz-Näherung ── */
+function simpleNJ(bj,sk){
+  const p=P();
+  const soz=Math.min(bj,p.BBG_RV*12)*(p.RV+p.AV)+Math.min(bj,p.BBG_KV*12)*(p.KV_AN+kvZus()/2+pvEff());
+  const zvE=Math.max(0,bj-soz-p.WK-(sk==3?72:36));
+  const e=est(zvE,sk);return bj-soz-e-solz(e);
 }
 
+/* ── DE: Jahresumschalter ── */
+function setJahr(y,btn){
+  jahr=y;
+  document.querySelectorAll('#jahr-toggle .variant-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(modus==='de'){
+    document.getElementById('hdr-subtitle').innerHTML='Deutschland &middot; SV + LSt + SolZ &middot; <span id="hdr-jahr">'+y+'</span>';
+    document.getElementById('s-jahr').textContent=y;
+    const sel=document.getElementById('kvKasse'),old=sel.value;
+    sel.innerHTML='';
+    P().kassen.forEach(k=>{const o=document.createElement('option');o.value=k.v;o.textContent=k.t;sel.appendChild(o);});
+    sel.value=old;if(!sel.value)sel.selectedIndex=0;
+    document.getElementById('bavHint').textContent='Steuerfrei bis '+P().BAV_MAX+' €/Mo';
+    document.getElementById('mjHint').textContent='Bis '+P().MJ_GRENZE+' €/Mo';
+    document.getElementById('uebHint').textContent=P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
+    document.getElementById('mo-mj-sub').textContent='Relevant bis '+P().MJ_GRENZE+' €/Mo';
+    document.getElementById('mo-ueb-sub').textContent='Relevant bei '+P().MJ_GRENZE+'–'+P().UEB_MAX+' €/Mo';
+    calc();rFW();rFR();rEZ();
+  } else {
+    document.getElementById('hdr-subtitle').textContent='Grenzgänger DE\u2192CH · Art. 15a DBA · '+y;
+    chInitYear();
+  }
+}
+
+/* ── DE: Hauptrechner ── */
 function calc(){
   syncSl();
   const p=P();
-  const bE=parseDe(document.getElementById('brutto').value);
-  const bMo=zeitraum==='monat'?bE:bE/12,bJa=bMo*12;
+  const bMo=deGetBruttoM(),bJa=bMo*deGehaelter;
   const skV=parseInt(document.getElementById('sk').value);
   const blV=document.getElementById('bl').value;
   const kircheOn=document.getElementById('kirche').checked;
@@ -746,9 +956,8 @@ function calc(){
   const isUEB=FT.ueb&&document.getElementById('isUEB').checked;
 
   if(isMJ){
-    const nn=fmt(bMo)+' €';
     document.getElementById('d-netto').textContent=fmt(bMo);
-    document.getElementById('d-netto2').textContent=nn;
+    document.getElementById('d-netto2').textContent=fmt(bMo)+' €';
     ['d-rv','d-av','d-kv','d-pv','d-soz','d-lst','d-solz','d-st'].forEach(id=>document.getElementById(id).textContent='0,00 €');
     document.getElementById('d-zve').textContent='0,00 €/Mo';
     setSumm(bMo,skV,blV,kircheOn,kl);return;
@@ -762,11 +971,8 @@ function calc(){
   const fbJa=FT.fb?(parseFloat(document.getElementById('fbVal').value)||0):0;
   const bavSF=Math.min(bavMo,p.BAV_MAX);
   const pkv=parseFloat(document.getElementById('kvP').value)||0;
-
-  // VL: AG-Anteil erhöht steuerliches + SV-pflichtiges Brutto, wird nicht ausgezahlt
   const vlMo=document.getElementById('vlOn').checked?(parseFloat(document.getElementById('vlAG').value)||0):0;
 
-  // Hilfsfunktion: SV + Steuer für beliebiges monatliches Brutto berechnen
   function calcAbgaben(bm){
     let kv=kvTyp==='g'?Math.min(bm,p.BBG_KV)*(p.KV_AN+kvZus()/2):pkv;
     let rv=rvBef?0:Math.min(bm,p.BBG_RV)*p.RV;
@@ -774,53 +980,46 @@ function calc(){
     let pv=Math.min(bm,p.BBG_KV)*pve;
     let s=rv+av+pv+kv;
     if(isUEB&&bm>=p.MJ_GRENZE&&bm<=p.UEB_MAX){const r=.15+.85*(bm-p.MJ_GRENZE)/(p.UEB_MAX-p.MJ_GRENZE);s*=r;rv*=r;av*=r;pv*=r;kv*=r;}
-    const bja=bm*12;
-    const sja=s*12;
+    const bja=bm*12,sja=s*12;
     const zv=Math.max(0,(bja+gwMo*12)-sfMo*12-bavSF*12-sja-p.WK-(skV==3?72:36)-kinder*p.KIND_FB-(skV==2?p.ENTL_SK2:0)-fbJa);
     const eja=est(zv,skV),slz=solz(eja),kja=kircheOn?eja*kiSatz(blV):0;
-    const stm=(eja+slz+kja)/12;
-    return {rv,av,pv,kv,soz:s,stMo:stm,estJa:eja,solzJa:slz,kJa:kja,zvE:zv};
+    return {rv,av,pv,kv,soz:s,stMo:(eja+slz+kja)/12,estJa:eja,solzJa:slz,kJa:kja,zvE:zv};
   }
 
-  // Berechnung mit VL-erhöhtem Brutto (steuerlich + SV)
-  const bMitVL=bMo+vlMo;
-  const a=calcAbgaben(bMitVL);
-  const nMo=bMo-a.soz-a.stMo+sfMo-naMo; // Auszahlung ohne VL-Betrag
+  const a=calcAbgaben(bMo+vlMo);
+  const nMo=bMo-a.soz-a.stMo+sfMo-naMo;
 
-  // VL-Ausweis: Differenz zu Berechnung ohne VL
   if(vlMo>0){
     const a0=calcAbgaben(bMo);
-    const nOhne=bMo-a0.soz-a0.stMo+sfMo-naMo;
-    const vlAbg=nOhne-nMo;
+    const vlAbg=(bMo-a0.soz-a0.stMo+sfMo-naMo)-nMo;
     document.getElementById('vl-ag').textContent=fmt(vlMo)+' €';
     document.getElementById('vl-abg').textContent='−'+fmt(Math.max(0,vlAbg))+' €';
     document.getElementById('vl-nk').textContent='−'+fmt(Math.max(0,vlAbg))+' €';
   }
 
-  const {rv:rvAN2,av:avAN2,pv:pvAN2,kv:kvAN2,soz:soz2,stMo,estJa,solzJa,kJa,zvE}=a;
-
   document.getElementById('d-netto').textContent=fmt(nMo);
   document.getElementById('d-netto2').textContent=fmt(nMo)+' €';
-  document.getElementById('d-rv').textContent=neg(rvAN2);
-  document.getElementById('d-av').textContent=neg(avAN2);
-  document.getElementById('d-kv').textContent=neg(kvAN2);
-  document.getElementById('d-pv').textContent=neg(pvAN2);
-  document.getElementById('d-soz').textContent=neg(soz2);
-  document.getElementById('d-zve').textContent=fmt(zvE/12)+' €/Mo';
+  document.getElementById('d-rv').textContent=neg(a.rv);
+  document.getElementById('d-av').textContent=neg(a.av);
+  document.getElementById('d-kv').textContent=neg(a.kv);
+  document.getElementById('d-pv').textContent=neg(a.pv);
+  document.getElementById('d-soz').textContent=neg(a.soz);
+  document.getElementById('d-zve').textContent=fmt(a.zvE/12)+' €/Mo';
   document.getElementById('d-sk').textContent=skV;
-  document.getElementById('d-lst').textContent=neg(estJa/12);
-  document.getElementById('d-solz').textContent=neg(solzJa/12);
-  document.getElementById('d-kirche').textContent=neg(kJa/12);
-  document.getElementById('d-kirche-row').style.display=kircheOn&&kJa>0?'flex':'none';
-  document.getElementById('d-st').textContent=neg(stMo);
+  document.getElementById('d-lst').textContent=neg(a.estJa/12);
+  document.getElementById('d-solz').textContent=neg(a.solzJa/12);
+  document.getElementById('d-kirche').textContent=neg(a.kJa/12);
+  document.getElementById('d-kirche-row').style.display=kircheOn&&a.kJa>0?'flex':'none';
+  document.getElementById('d-st').textContent=neg(a.stMo);
   setSumm(bMo,skV,blV,kircheOn,kl);
   rEZ();
 }
 
 function setSumm(bMo,sk,bl,kirche,kl){
-  document.getElementById('s-brutto').textContent=fmt(bMo,0)+' €';
+  document.getElementById('s-brutto').textContent=fmt(bMo,0)+' € / Mo · '+fmt(bMo*deGehaelter,0)+' € / J (×'+deGehaelter+')';
   document.getElementById('s-sk').textContent=sk;
   document.getElementById('s-bl').textContent=BL_NAME[bl]||bl;
+  document.getElementById('s-bl-row').style.display=kirche?'flex':'none';
   document.getElementById('s-kirche').textContent=kirche?'Ja':'Nein';
   document.getElementById('s-kinder').textContent=kinder>0?String(kinder).replace('.',','):'Nein';
   document.getElementById('s-kvtyp').textContent=kvTyp==='g'?'Gesetzlich':'Privat';
@@ -830,13 +1029,7 @@ function setSumm(bMo,sk,bl,kirche,kl){
   document.getElementById('s-alter').textContent=kl?'Ja':'Nein';
 }
 
-function simpleNJ(bj,sk){
-  const p=P();
-  const soz=Math.min(bj,p.BBG_RV*12)*(p.RV+p.AV)+Math.min(bj,p.BBG_KV*12)*(p.KV_AN+kvZus()/2+pvEff());
-  const zvE=Math.max(0,bj-soz-p.WK-(sk==3?72:36));
-  const e=est(zvE,sk);return bj-soz-e-solz(e);
-}
-
+/* ── DE: Hilfsrechner ── */
 function rFW(){
   const pr=parseDe(document.getElementById('fwP').value);
   const pct=parseFloat(document.getElementById('fwT').value)||.01;
@@ -850,7 +1043,6 @@ function rFW(){
   document.getElementById('fw-fk').textContent='+'+fmt(pr*km*.0003)+' €';
   document.getElementById('fw-mst').textContent='≈ −'+fmt(mst)+' €';
 }
-
 function rFR(){
   const pr=parseDe(document.getElementById('frP').value);
   const b=parseDe(document.getElementById('frB').value);
@@ -863,7 +1055,6 @@ function rFR(){
   document.getElementById('fr-kauf').textContent=fmt(kaufMo)+' €/Mo';
   document.getElementById('fr-ers').textContent='≈ +'+fmt(Math.max(0,kaufMo-mst))+' €/Mo';
 }
-
 function rEZ(){
   const b=parseDe(document.getElementById('ezB').value);
   const ez=parseDe(document.getElementById('ezE').value);
@@ -876,66 +1067,369 @@ function rEZ(){
   document.getElementById('ez-n').textContent=fmt(nez)+' €';
 }
 
-function rWN(){
-  const n=parseFloat(document.getElementById('wnN').value)||0;
-  syncWN();
-  if(n<=0){document.getElementById('wn-res').style.display='none';return;}
-  document.getElementById('wn-res').style.display='block';
-  const sk=parseInt(document.getElementById('wnSK').value);
-  let lo=n,hi=n*8;
-  for(let i=0;i<90;i++){const mid=(lo+hi)/2;if(simpleNJ(mid*12,sk)/12<n)lo=mid;else hi=mid;}
-  const b=(lo+hi)/2,abg=b>0?(b-n)/b:0;
-  document.getElementById('wn-n').textContent=fmt(n)+' €';
-  document.getElementById('wn-q').textContent=(abg*100).toFixed(1)+' %';
-  document.getElementById('wn-b').textContent=fmt(b)+' €';
-  document.getElementById('wn-bj').textContent=fmt(b*12)+' €';
+/* ── CH: Konstanten & Params ── */
+const CH_PARAMS={
+  2024:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:11604,z1_top:17005,z2_top:66760,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:966.53,flat3:0.42,k3:9336.45,flat4:0.45,k4:17671.20,soliFreigrenze:17543,soliFaktor:0.055,soliGleitzone_start:920,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:27566,swicaKV:{u18:50.90,u25:158.90,ab26:211.80}},
+  2025:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:12096,z1_top:17430,z2_top:68430,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:1025.38,flat3:0.42,k3:9972.98,flat4:0.45,k4:18307.73,soliFreigrenze:18130,soliFaktor:0.055,soliGleitzone_start:972,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:29344,swicaKV:{u18:59.20,u25:184.70,ab26:246.30}},
+  2026:{ahvRate:0.0535,alvRate:0.011,bvgKoordAbzugJ:25725,grundfreibetrag:12648,z1_top:17901,z2_top:70543,z3_top:277825,a1:979.18,b1:1400,a2:192.59,b2:2397,c2:1091.56,flat3:0.42,k3:10638.05,flat4:0.45,k4:18961.49,soliFreigrenze:18693,soliFaktor:0.055,soliGleitzone_start:1024,kstRate:0.08,entlastungsbetrag:4260,wkPauschale:1230,saAlterHoechstLedig:30826,swicaKV:{u18:58.10,u25:181.40,ab26:241.80}}
+};
+const CH_FX_ANNUAL={2024:{rate:1.045,label:'100 CHF = 104,50 EUR · Anlage N-Gre 2024'},2025:{rate:1.065,label:'100 CHF = 106,50 EUR · Anlage N-Gre 2025'}};
+let chLiveRate=null,chLiveFetched=false;
+
+async function fetchChLiveRate(){
+  try{
+    const r=await fetch('https://api.frankfurter.app/latest?from=CHF&to=EUR');
+    const d=await r.json();chLiveRate=d.rates.EUR;chLiveFetched=true;updateChFxBadge();
+  }catch(e){
+    try{
+      const r2=await fetch('https://data-api.ecb.europa.eu/service/data/EXR/D.CHF.EUR.SP00.A?lastNObservations=1&detail=dataonly&format=jsondata');
+      const d2=await r2.json();
+      chLiveRate=1/d2.dataSets[0].series['0:0:0:0:0'].observations['0'][0];chLiveFetched=true;updateChFxBadge();
+    }catch(e2){chLiveRate=null;chLiveFetched=true;updateChFxBadge();}
+  }
+}
+function getChFxRate(){const fx=CH_FX_ANNUAL[jahr];if(fx)return fx.rate;return chLiveRate!==null?chLiveRate:1.05;}
+function getChFxLabel(){const fx=CH_FX_ANNUAL[jahr];if(fx)return fx.label;if(chLiveRate!==null){return'100 CHF = '+(chLiveRate*100).toFixed(2).replace('.',',')+' EUR · EZB-Tageskurs';}return'100 CHF = 105,00 EUR · Schätzwert';}
+function updateChFxBadge(){const el=document.getElementById('ch-fx-badge');if(el)el.textContent=getChFxLabel();}
+
+function chCP(){return CH_PARAMS[jahr]||CH_PARAMS[2026];}
+function bvgSparRateAN(alter){if(alter<25)return 0;if(alter<35)return 0.035;if(alter<45)return 0.05;if(alter<55)return 0.075;return 0.09;}
+const BVG_RISIKO_AN_CH=0.005,BVG_RISIKO_AG_CH=0.005;
+function getSwicaPraemie(alter,p){if(alter<19)return p.swicaKV.u18;if(alter<26)return p.swicaKV.u25;return p.swicaKV.ab26;}
+
+let chKirche=false,chKvMode='chf',chPendler=true,chGehaelter=12;
+
+function chSetGehaelter(n,btn){
+  chGehaelter=n;
+  btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('ch-gehaelter-hint').textContent='Jahresgehalt = '+n+' × Monatsgehalt';
+  chSyncBrutto('m');calcCH();
+}
+const KANTON_NAME={AG:'Aargau',BL:'Basel-Landschaft',BS:'Basel-Stadt',BE:'Bern',FR:'Freiburg',GE:'Genf',JU:'Jura',NE:'Neuenburg',SG:'St. Gallen',SH:'Schaffhausen',SO:'Solothurn',TG:'Thurgau',TI:'Tessin',VD:'Waadt',VS:'Wallis',ZH:'Zürich'};
+
+function setZCH(z,btn){btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');chSyncBrutto('m');calcCH();}
+function chFmtFocus(el){el.value=String(parseDe(el.value)||'').replace(/^0$/,'');}
+function chFmtBlur(el){const v=parseDe(el.value);if(v)el.value=v.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function chSyncBrutto(which){
+  const faktor=chGehaelter;
+  if(which==='m'||which==='sl'){const m=parseDe(document.getElementById('ch-brutto-m').value);document.getElementById('ch-brutto-j').value=m>0?(m*faktor).toLocaleString('de-DE',{maximumFractionDigits:0}):'';}
+  else if(which==='j'){const j=parseDe(document.getElementById('ch-brutto-j').value);const m=j>0?j/faktor:0;document.getElementById('ch-brutto-m').value=m>0?m.toLocaleString('de-DE',{maximumFractionDigits:0}):'';}
+}
+function chGetBruttoM(){return parseDe(document.getElementById('ch-brutto-m').value)||0;}
+function chSetKirche(v){
+  chKirche=v;
+  document.getElementById('ch-btn-kk-ja').classList.toggle('on',v);
+  document.getElementById('ch-btn-kk-nein').classList.toggle('on',!v);
+  calcCH();
+}
+function chSetKvMode(m){
+  chKvMode=m;
+  document.getElementById('ch-btn-kv-chf').classList.toggle('on',m==='chf');
+  document.getElementById('ch-btn-kv-eur').classList.toggle('on',m==='eur');
+  document.getElementById('ch-kv-eur-wrap').style.display=m==='eur'?'block':'none';
+  calcCH();
+}
+function chSetPendler(v){
+  chPendler=v;
+  document.getElementById('ch-btn-pend-ja').classList.toggle('on',v);
+  document.getElementById('ch-btn-pend-nein').classList.toggle('on',!v);
+  const op=v?'1':'0.4';
+  ['ch-pendler-km-wrap','ch-pendler-tage-wrap'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.opacity=op;});
+  document.getElementById('ch-km').disabled=!v;
+  document.getElementById('ch-tage').disabled=!v;
+  updateChPendlerHint();calcCH();
+}
+function updateChPendlerHint(){
+  const hint=document.getElementById('ch-km-hint');if(!hint)return;
+  hint.textContent=jahr>=2026?'Ab 2026: einheitlich 0,38 €/km, max. 4.500 €/J.':'Bis 2025: 0,30 €/km (1–20 km) + 0,38 €/km (ab 21 km), max. 4.500 €/J.';
+}
+function chOnAlterChange(){
+  const alter=parseInt(document.getElementById('ch-alter').value)||35;
+  const p=chCP();
+  const sparRate=bvgSparRateAN(alter);
+  const totalRate=sparRate+BVG_RISIKO_AN_CH;
+  document.getElementById('ch-bvg-disp').value=totalRate.toFixed(1);
+  document.getElementById('ch-bvg-hint').textContent='Spar '+(sparRate*100).toFixed(1)+'% + Risiko 0,5% auf koordinierten Lohn';
+  const swica=getSwicaPraemie(alter,p);
+  document.getElementById('ch-kv').value=swica.toFixed(2);
+  const gruppe=alter<19?'0–18 J.':alter<26?'19–25 J.':'ab 26 J.';
+  document.getElementById('ch-kv-hint').textContent='SWICA Standard EU '+jahr+' · '+gruppe+' · CHF '+swica.toFixed(2)+'/Mt.';
+  calcCH();
+}
+function chOnHoChange(){
+  const ho=Math.min(parseInt(document.getElementById('ch-ho-tage').value)||0,210);
+  const tEl=document.getElementById('ch-tage');
+  if(!tEl._edited)tEl.value=Math.max(0,240-ho);
+}
+function chInitYear(){
+  const p=chCP();
+  document.getElementById('ch-ahv-disp').value=(p.ahvRate*100).toFixed(2);
+  document.getElementById('ch-alv-disp').value=(p.alvRate*100).toFixed(2);
+  document.getElementById('ch-ahv-hint').textContent='Gesetzlich – '+jahr;
+  updateChFxBadge();updateChPendlerHint();chOnAlterChange();
 }
 
-// ── Steuerfreie Zahlungen ──
-let sfRows=[];
-let sfRowId=0;
+/* ── CH: Formatierung ── */
+function fmtCH(n,cur='CHF',d=2){return Math.abs(n||0).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d})+' '+cur;}
+const chNeg=(v,c='CHF')=>v===0?'—':'−'+fmtCH(v,c);
+const chPos=(v,c='CHF')=>v===0?'—':'+'+fmtCH(v,c);
+const chPlain=(v,c='CHF')=>fmtCH(v,c);
+
+/* ── CH: ESt-Berechnung (jahresabhängige Koeffizienten) ── */
+function chCalcESt(zve,sk,p){
+  if(zve<=p.grundfreibetrag)return 0;
+  let g;
+  if(zve<=p.z1_top){const y=(zve-p.grundfreibetrag)/10000;g=Math.floor((p.a1*y+p.b1)*y);}
+  else if(zve<=p.z2_top){const z=(zve-p.z1_top)/10000;g=Math.floor((p.a2*z+p.b2)*z+p.c2);}
+  else if(zve<=p.z3_top)g=Math.floor(p.flat3*zve-p.k3);
+  else g=Math.floor(p.flat4*zve-p.k4);
+  return sk==3?chCalcESt(zve/2,1,p)*2:g;
+}
+function chSolz(e,p){
+  if(e<=0||e<=p.soliFreigrenze)return 0;
+  if(e<=p.soliGleitzone_start)return 0;
+  return Math.min(e*p.soliFaktor,(e-p.soliGleitzone_start)*0.199);
+}
+
+/* ── CH: makeRows für Breakdown-Cards ── */
+function chMakeRows(rows,id){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML=rows.map(r=>{
+    const nameHtml=r.name+(r.note?`<span style="font-size:8px;color:var(--text-muted);opacity:.6;display:block;margin-top:2px;line-height:1.3;">${r.note}</span>`:'');
+    const base='display:grid;grid-template-columns:1fr 80px 80px;gap:4px;align-items:start;padding:5px 0;border-bottom:1px solid var(--border);';
+    const nameStyle='font-family:IBM Plex Mono,monospace;font-size:10px;color:var(--text-muted);';
+    const valStyle=`font-family:IBM Plex Mono,monospace;font-size:10px;white-space:nowrap;text-align:right;color:${r.cls==='neg'?'#e07070':r.cls==='pos'?'var(--accent-lt)':r.cls==='tax'?'#c4a93a':'var(--text-muted)'};`;
+    if(r.valM===undefined){
+      return`<div style="${base}${r.total?'border-top:1px solid var(--border);margin-top:2px;padding-top:8px;':''}" ><span style="${nameStyle}">${nameHtml}</span><span style="${valStyle}grid-column:2/4;text-align:right;" colspan="2">${r.val||'–'}</span></div>`;
+    }
+    return`<div style="${base}${r.total?'border-top:1px solid var(--border);margin-top:2px;padding-top:8px;':''}" ><span style="${nameStyle}${r.total?'color:var(--text);':''}">${nameHtml}</span><span style="${valStyle}${r.total?'color:var(--accent-lt);':''}">${r.valM}</span><span style="${valStyle}opacity:.65;">${r.valJ}</span></div>`;
+  }).join('');
+}
+
+/* ── CH: Hauptrechner ── */
+function calcCH(){
+  const p=chCP();
+  const kurs=getChFxRate();
+  const bruttoM=chGetBruttoM();
+  const bruttoJ=bruttoM*chGehaelter;
+
+  const alter=parseInt(document.getElementById('ch-alter').value)||35;
+  const sk=parseInt(document.getElementById('ch-sk').value)||1;
+  const km=parseInt(document.getElementById('ch-km').value)||0;
+  const nbuvAnPct=(parseFloat(document.getElementById('ch-nbuv-an').value)||0)/100;
+  const ktgAnPct=(parseFloat(document.getElementById('ch-ktg-an').value)||0)/100;
+  const ktgAg=parseFloat(document.getElementById('ch-ktg-ag').value)||0;
+  const nbuvAg=parseFloat(document.getElementById('ch-nbuv-ag').value)||0;
+  const agZuschlagM=ktgAg+nbuvAg;
+  const massgebendM=bruttoM+agZuschlagM;
+  const massgebendJ=massgebendM*12;
+
+  // Slider sync
+  document.getElementById('ch-bruttoSl').value=Math.min(25000,bruttoM);
+
+  // ── CH SV AN ──
+  const ahvM=bruttoM*p.ahvRate;
+  const alvM=bruttoM*p.alvRate;
+  const ktgAnM=bruttoM*ktgAnPct;
+  const nbuvAnM=bruttoM*nbuvAnPct;
+  const koordAbzugM=p.bvgKoordAbzugJ/12;
+  const bvgBasisM=Math.max(0,bruttoM-koordAbzugM);
+  const bvgAnSpar=bvgSparRateAN(alter);
+  const bvgAnM=(bvgAnSpar+BVG_RISIKO_AN_CH)*bvgBasisM;
+  const bvgAgM=(bvgAnSpar+BVG_RISIKO_AG_CH)*bvgBasisM;
+  const chAbzuegeAN=ahvM+alvM+ktgAnM+nbuvAnM+bvgAnM;
+  const chQST_M=bruttoM*0.045;
+
+  // ── WK ──
+  const arbeitstage=chPendler?(parseInt(document.getElementById('ch-tage').value)||240):0;
+  let pendlerPP=0;
+  if(chPendler&&km>0){
+    if(jahr>=2026)pendlerPP=km*arbeitstage*0.38;
+    else pendlerPP=Math.min(km,20)*arbeitstage*0.30+Math.max(0,km-20)*arbeitstage*0.38;
+    pendlerPP=Math.min(pendlerPP,4500);
+  }
+  const hoTage=Math.min(parseInt(document.getElementById('ch-ho-tage').value)||0,210);
+  const hoPauschale=hoTage*6;
+  const weitereWkJ=parseFloat(document.getElementById('ch-weitere-wk').value)||0;
+  // 50% NBUV AN+AG als WK
+  const nbuvGesamtM=nbuvAnM+(nbuvAg);
+  const nbuvWkAbzugJ=nbuvGesamtM*0.5*12*kurs;
+  const wkRohsumme=pendlerPP+hoPauschale+nbuvWkAbzugJ+weitereWkJ;
+  const wkAbzug=Math.max(p.wkPauschale,wkRohsumme);
+  const wkNutzePauschale=wkRohsumme<p.wkPauschale;
+
+  // ── KV ──
+  const kvChfM=parseFloat(document.getElementById('ch-kv').value)||0;
+  const kvAbzugEurM=chKvMode==='eur'?(parseFloat(document.getElementById('ch-kv-praemie-eur').value)||0):kvChfM*kurs;
+
+  // ── SA: Altersvorsorge §10 Abs.1 Nr.2a ──
+  const ahvGesamtJ=bruttoM*p.ahvRate*2*12; // AN+AG
+  const bvgGesamtJ=(bvgAnM+bvgAgM)*12;
+  const alterVorsorgeGesamtEur=(ahvGesamtJ+bvgGesamtJ)*kurs;
+  const agAlterEurCorr=(ahvM+bvgAgM)*12*kurs;
+  const saAlterRoh=Math.min(alterVorsorgeGesamtEur,p.saAlterHoechstLedig)-agAlterEurCorr;
+  const saAlter=Math.max(0,saAlterRoh);
+
+  // ── SA: KV-Basisschutz §10 Abs.1 Nr.3 ──
+  const saKV=kvChfM*12*kurs;
+  const saGesamt=Math.max(36,saAlter+saKV);
+
+  // ── ZvE ──
+  const massgebendEurJ=massgebendJ*kurs;
+  const entlSK2=sk==2?p.entlastungsbetrag:0;
+  const zve=Math.max(0,massgebendEurJ-wkAbzug-saGesamt-entlSK2);
+
+  // ── ESt, SolZ, KiSt ──
+  const estJ=chCalcESt(zve,sk,p);
+  let soli=0;
+  if(estJ>p.soliFreigrenze)soli=estJ*p.soliFaktor;
+  else if(estJ>p.soliGleitzone_start)soli=(estJ-p.soliGleitzone_start)*0.199;
+  const kst=chKirche?estJ*p.kstRate:0;
+
+  // ── CH-QST Anrechnung ──
+  const chQSTEurJ=chQST_M*12*kurs;
+  const anrechnungJ=Math.min(chQSTEurJ,estJ);
+  const estNachAnrJ=Math.max(0,estJ-anrechnungJ);
+  const deGesamtJ=estNachAnrJ+soli+kst;
+  const deGesamtM_EUR=deGesamtJ/12;
+  const deGesamtM_CHF=deGesamtM_EUR/kurs;
+
+  // ── Netto ──
+  const nettoM_CHF=bruttoM-chAbzuegeAN-chQST_M-deGesamtM_CHF;
+  const nettoJ_CHF=nettoM_CHF*12;
+  const echtNettoM_EUR=nettoM_CHF*kurs-kvAbzugEurM;
+  const echtNettoJ_EUR=echtNettoM_EUR*12;
+  const bruttoEurM=bruttoM*kurs;
+  const bruttoEurJ=bruttoJ*kurs;
+  const echtQuote=bruttoEurM>0?(echtNettoM_EUR/bruttoEurM)*100:0;
+
+  // ── Display: Hero (DE-Stil) ──
+  document.getElementById('ch-d-netto-eur-m').textContent=fmt(echtNettoM_EUR);
+  document.getElementById('ch-d-netto-chf-sub').textContent='≈ '+fmtCH(nettoM_CHF,'CHF')+' / Monat (vor KV-Abzug) · '+echtQuote.toFixed(1)+' % von Brutto';
+  document.getElementById('ch-d-netto2').textContent=fmt(echtNettoM_EUR)+' €';
+  document.getElementById('ch-d-zve').textContent=fmt(zve/12)+' €/Mo';
+
+  // Kompakte CH-SV Zeilen (wie DE sub-sep Stil)
+  const chNegR=v=>v>0?'−'+fmtCH(v,'CHF'):'0,00 CHF';
+  const chSvRows=[
+    {rl:'AHV/IV/EO ('+( p.ahvRate*100).toFixed(2)+'%)',rv:chNegR(ahvM),cls:'neg'},
+    {rl:'ALV ('+(p.alvRate*100).toFixed(2)+'%)',rv:chNegR(alvM),cls:'neg'},
+    ...(ktgAnM>0?[{rl:'KTG AN ('+(ktgAnPct*100).toFixed(2)+'%)',rv:chNegR(ktgAnM),cls:'neg'}]:[]),
+    ...(nbuvAnM>0?[{rl:'NBUV AN ('+(nbuvAnPct*100).toFixed(2)+'%)',rv:chNegR(nbuvAnM),cls:'neg'}]:[]),
+    {rl:'BVG AN (Spar '+(bvgAnSpar*100).toFixed(1)+'%+0,5%)',rv:chNegR(bvgAnM),cls:'neg'},
+    {rl:'CH-Quellensteuer (4,5%)',rv:chNegR(chQST_M),cls:'neg'},
+    {rl:'Σ CH-Abzüge',rv:chNegR(chAbzuegeAN+chQST_M),cls:'neg'},
+  ];
+  document.getElementById('ch-rows-sv-compact').innerHTML=chSvRows.map(r=>
+    `<div class="result-row"><span class="rl">${r.rl}</span><span class="rv ${r.cls||''}">${r.rv}</span></div>`
+  ).join('');
+
+  // Kompakte DE-Steuer Zeilen
+  const eurNegR=v=>v>0?'−'+fmt(v)+' €':'0,00 €';
+  const eurPosR=v=>v>0?'+'+fmt(v)+' €':'0,00 €';
+  const deRows=[
+    {rl:'ESt brutto (§32a)',rv:eurNegR(estJ/12),cls:'neg'},
+    {rl:'Anrechnung CH-QST',rv:eurPosR(anrechnungJ/12),cls:'pos'},
+    {rl:'ESt nach Anrechnung',rv:eurNegR(estNachAnrJ/12),cls:'neg'},
+    ...(soli>0?[{rl:'Solidaritätszuschlag',rv:eurNegR(soli/12),cls:'neg'}]:[]),
+    ...(chKirche?[{rl:'Kirchensteuer (8%)',rv:eurNegR(kst/12),cls:'neg'}]:[]),
+    {rl:'Σ DE-Steuern',rv:eurNegR(deGesamtM_EUR),cls:'neg'},
+  ];
+  document.getElementById('ch-rows-de-compact').innerHTML=deRows.map(r=>
+    `<div class="result-row"><span class="rl">${r.rl}</span><span class="rv ${r.cls||''}">${r.rv}</span></div>`
+  ).join('');
+
+  // ── CH-SV Breakdown ──
+  chMakeRows([
+    {name:'Bruttolohn',valM:chPlain(bruttoM),valJ:chPlain(bruttoJ)},
+    {name:'AHV/IV/EO ('+(p.ahvRate*100).toFixed(2)+'%)',valM:chNeg(ahvM),valJ:chNeg(ahvM*12),cls:'neg'},
+    {name:'ALV ('+(p.alvRate*100).toFixed(2)+'%)',valM:chNeg(alvM),valJ:chNeg(alvM*12),cls:'neg'},
+    ...(ktgAnM>0?[{name:'KTG AN ('+(ktgAnPct*100).toFixed(2)+'%)',valM:chNeg(ktgAnM),valJ:chNeg(ktgAnM*12),cls:'neg'}]:[]),
+    {name:'NBUV AN ('+(nbuvAnPct*100).toFixed(2)+'%)',valM:chNeg(nbuvAnM),valJ:chNeg(nbuvAnM*12),cls:'neg'},
+    {name:'BVG AN (Spar '+(bvgAnSpar*100).toFixed(1)+'%+0,5%)',valM:chNeg(bvgAnM),valJ:chNeg(bvgAnM*12),cls:'neg',note:'koord. Lohn '+fmtCH(bvgBasisM,'CHF')+'/Mt.'},
+    {name:'CH-Quellensteuer (4,5%)',valM:chNeg(chQST_M),valJ:chNeg(chQST_M*12),cls:'neg',note:'auf DE-ESt angerechnet'},
+    {name:'Netto vor DE-Steuer',valM:chPlain(bruttoM-chAbzuegeAN-chQST_M),valJ:chPlain((bruttoM-chAbzuegeAN-chQST_M)*12),cls:'pos',total:true},
+  ],'ch-rows-sv');
+
+  // ── DE-Steuer Breakdown ──
+  chMakeRows([
+    {name:'Maßgebender Lohn',val:chPlain(massgebendM)+' / '+chPlain(massgebendJ),note:'Brutto + steuerpfl. AG-Beiträge'},
+    {name:'WK-Abzug gesamt',val:chNeg(wkAbzug/12*kurs,'EUR')+' / '+chNeg(wkAbzug,'EUR'),cls:'neg',
+      note:wkNutzePauschale?'AN-Pauschbetrag '+p.wkPauschale+' € greift':'Pendler '+fmtCH(pendlerPP,'EUR')+(hoPauschale>0?' + HO '+fmtCH(hoPauschale,'EUR'):'')+' + NBUV-WK '+fmtCH(Math.round(nbuvWkAbzugJ),'EUR')+(weitereWkJ>0?' + weitere '+fmtCH(weitereWkJ,'EUR'):'')+' /J.'},
+    {name:'SA: Altersvorsorge §10 Nr.2a',val:chNeg(saAlter/12,'EUR')+' / '+chNeg(saAlter,'EUR'),cls:'neg',
+      note:'AHV/IV+BVG '+fmtCH(Math.round(alterVorsorgeGesamtEur),'EUR')+' − AG '+fmtCH(Math.round(agAlterEurCorr),'EUR')+' = '+fmtCH(Math.round(saAlterRoh),'EUR')+', max. '+p.saAlterHoechstLedig.toLocaleString('de-DE')+' €'},
+    {name:'SA: KV-Basisschutz §10 Nr.3',val:chNeg(saKV/12,'EUR')+' / '+chNeg(saKV,'EUR'),cls:'neg',note:'SWICA-Prämie CHF '+fmtCH(kvChfM,'CHF')+'/Mt. voll absetzbar'},
+    {name:'ZVE',val:chPlain(zve,'EUR'),note:'Brutto '+fmtCH(Math.round(massgebendEurJ),'EUR')+' − WK '+fmtCH(Math.round(wkAbzug),'EUR')+' − SA '+fmtCH(Math.round(saGesamt),'EUR')},
+    {name:'ESt brutto (§32a)',valM:chNeg(estJ/12,'EUR'),valJ:chNeg(estJ,'EUR'),cls:'tax'},
+    {name:'+ Anrechnung CH-QST',valM:chPos(anrechnungJ/12,'EUR'),valJ:chPos(anrechnungJ,'EUR'),cls:'pos'},
+    {name:'ESt nach Anrechnung',valM:chNeg(estNachAnrJ/12,'EUR'),valJ:chNeg(estNachAnrJ,'EUR'),cls:'neg'},
+    {name:'Solidaritätszuschlag',valM:soli>0?chNeg(soli/12,'EUR'):'—',valJ:soli>0?chNeg(soli,'EUR'):'—',cls:soli>0?'neg':''},
+    {name:chKirche?'Kirchensteuer (8%)':'Kirchensteuer',valM:chKirche?chNeg(kst/12,'EUR'):'—',valJ:chKirche?chNeg(kst,'EUR'):'—',cls:chKirche?'neg':''},
+    {name:'DE-Steuern gesamt',valM:chNeg(deGesamtM_EUR,'EUR'),valJ:chNeg(deGesamtJ,'EUR'),cls:'neg',total:true},
+  ],'ch-rows-de');
+
+  // ── AG-Beiträge Breakdown ──
+  chMakeRows([
+    {name:'AG-Anteil KTG',valM:ktgAg>0?chPlain(ktgAg):'—',valJ:ktgAg>0?chPlain(ktgAg*12):'—',cls:ktgAg>0?'tax':'',note:'Geldwerter Vorteil'},
+    {name:'AG-Anteil NBUV',valM:nbuvAg>0?chPlain(nbuvAg):'—',valJ:nbuvAg>0?chPlain(nbuvAg*12):'—',cls:nbuvAg>0?'tax':'',note:'Geldwerter Vorteil'},
+    {name:'AG-Zuschlag gesamt',valM:agZuschlagM>0?chPlain(agZuschlagM):'—',valJ:agZuschlagM>0?chPlain(agZuschlagM*12):'—',cls:agZuschlagM>0?'tax':'',note:'Maßgeb. Lohn: '+fmtCH(massgebendM)+'/Mt.',total:true},
+  ],'ch-rows-ag');
+
+  // ── KV & Verfügbares Einkommen ──
+  const swicaRef=getSwicaPraemie(alter,p);
+  chMakeRows([
+    {name:'Netto CHF (nach CH-SV+QST+ESt)',valM:chPlain(nettoM_CHF),valJ:chPlain(nettoJ_CHF),cls:'pos'},
+    {name:'= in EUR',valM:chPlain(nettoM_CHF*kurs,'EUR'),valJ:chPlain(nettoJ_CHF*kurs,'EUR'),cls:'pos'},
+    {name:'SWICA-Referenz '+jahr,valM:chPlain(swicaRef),valJ:chPlain(swicaRef*12),note:alter<19?'0–18 J.':alter<26?'19–25 J.':'ab 26 J.'},
+    {name:'KV-Abzug',valM:chNeg(kvAbzugEurM,'EUR'),valJ:chNeg(kvAbzugEurM*12,'EUR'),cls:'neg',note:chKvMode==='eur'?'Eigener EUR-Wert':'CHF×'+kurs.toFixed(4)},
+    {name:'Echtes Netto (nach allem)',valM:chPlain(echtNettoM_EUR,'EUR'),valJ:chPlain(echtNettoJ_EUR,'EUR'),cls:'pos',note:echtQuote.toFixed(1)+'% von Brutto '+fmtCH(bruttoEurM,'EUR')+'/Mt.',total:true},
+  ],'ch-rows-kv');
+
+
+
+  // ── Info-Box ──
+  document.getElementById('ch-info-box').innerHTML=`
+    <b>Steuerjahr ${jahr}</b> · Art. 15a DBA CH–DE<br>
+    Maßgebender Lohn: <b>${fmtCH(massgebendM,'CHF')}/Mt.</b>${agZuschlagM>0?' (Brutto + '+fmtCH(agZuschlagM,'CHF')+' AG-Extras)':''}<br>
+    WK gesamt: <b>${fmtCH(wkAbzug,'EUR')}/J.</b>${wkNutzePauschale?' (AN-Pauschbetrag greift)':''}<br>
+    SA Altersvorsorge: <b>${fmtCH(saAlter,'EUR')}/J.</b> · KV absetzbar: <b>${fmtCH(saKV,'EUR')}/J.</b><br>
+    CH-QST-Anrechnung: ${fmtCH(chQST_M,'CHF')}/Mt. → <b>${fmtCH(anrechnungJ/12,'EUR')}/Mt.</b><br>
+    Wechselkurs: <b>${getChFxLabel()}</b>
+  `;
+
+  // ── Eckdaten ──
+  document.getElementById('ch-s-brutto').textContent=fmtCH(bruttoM,'CHF');
+  document.getElementById('ch-s-brutto-eur').textContent='≈ '+fmtCH(bruttoEurM,'EUR');
+  document.getElementById('ch-s-jahr').textContent=jahr;
+  document.getElementById('ch-s-sk').textContent=sk;
+  document.getElementById('ch-s-kurs').textContent='1 CHF = '+kurs.toFixed(4)+' EUR';
+  document.getElementById('ch-s-kirche').textContent=chKirche?'Ja (8 %)':'Nein';
+  document.getElementById('ch-s-pendler').textContent=chPendler&&km>0?fmtCH(pendlerPP,'EUR',0):'Nein';
+  document.getElementById('ch-s-bvg').textContent=((bvgAnSpar+BVG_RISIKO_AN_CH)*100).toFixed(1)+' %';
+  document.getElementById('ch-s-quote').textContent=echtQuote.toFixed(1)+' %';
+}
+
+/* ── SF-Zeilen ── */
+let sfRows=[],sfRowId=0;
 function addSFRow(){
-  const id='sf'+sfRowId++;
-  sfRows.push(id);
-  const div=document.createElement('div');
-  div.id='sfrow-'+id;
+  const id='sf'+sfRowId++;sfRows.push(id);
+  const div=document.createElement('div');div.id='sfrow-'+id;
   div.style.cssText='display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin-bottom:8px;';
-  div.innerHTML=`<input type="number" id="sfv-${id}" value="0" min="0" placeholder="Betrag €/Mo" oninput="calc()" style="width:100%"><input type="text" id="sfl-${id}" placeholder="Bezeichnung" oninput="" style="width:120px;font-size:11px"><button onclick="removeSFRow('${id}')" style="background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;cursor:pointer;white-space:nowrap;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">✕</button>`;
-  document.getElementById('sf-list').appendChild(div);
-  calc();
+  div.innerHTML=`<input type="number" id="sfv-${id}" value="0" min="0" placeholder="Betrag €/Mo" oninput="calc()" style="width:100%"><input type="text" id="sfl-${id}" placeholder="Bezeichnung" style="width:120px;font-size:11px"><button onclick="removeSFRow('${id}')" style="background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 8px;cursor:pointer;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">✕</button>`;
+  document.getElementById('sf-list').appendChild(div);calc();
 }
-function removeSFRow(id){
-  sfRows=sfRows.filter(r=>r!==id);
-  const el=document.getElementById('sfrow-'+id);
-  if(el)el.remove();
-  calc();
-}
+function removeSFRow(id){sfRows=sfRows.filter(r=>r!==id);document.getElementById('sfrow-'+id)?.remove();calc();}
 function getSFTotal(){
   if(!document.getElementById('sfOn').checked)return 0;
-  return sfRows.reduce((s,id)=>{
-    const v=parseFloat(document.getElementById('sfv-'+id)?.value)||0;
-    return s+v;
-  },0);
+  return sfRows.reduce((s,id)=>{return s+(parseFloat(document.getElementById('sfv-'+id)?.value)||0);},0);
 }
 
-function toggleBL(){
-  const on=document.getElementById('kirche').checked;
-  document.getElementById('bl-row').style.display=on?'block':'none';
-  document.getElementById('s-bl-row').style.display=on?'flex':'none';
-}
-function setZ(z,btn){zeitraum=z;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calc();}
+/* ── UI-Helfer ── */
+function toggleBL(){const on=document.getElementById('kirche').checked;document.getElementById('bl-row').style.display=on?'block':'none';document.getElementById('s-bl-row').style.display=on?'flex':'none';}
 function setK(k,btn){kinder=k;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');calc();}
-function setKV(t,btn){
-  kvTyp=t;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
-  document.getElementById('kvGrow').style.display=t==='g'?'block':'none';
-  document.getElementById('kvProw').style.display=t==='p'?'block':'none';
-  calc();
-}
+function setKV(t,btn){kvTyp=t;btn.closest('.seg').querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.getElementById('kvGrow').style.display=t==='g'?'block':'none';document.getElementById('kvProw').style.display=t==='p'?'block':'none';calc();}
 function kvChange(){document.getElementById('kvCust').style.display=document.getElementById('kvKasse').value==='custom'?'block':'none';calc();}
-function parseDe(s){return parseFloat(String(s).replace(/\./g,'').replace(',','.'))||0;}
-function fmtInput(el){const v=parseDe(el.value);if(v>0)el.value=v.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:2});else el.value='';}
-function rawInput(el){el.value=String(parseDe(el.value)||'').replace('.',',');}
-function syncSl(){document.getElementById('bruttoSl').value=parseDe(document.getElementById('brutto').value)||0;}
 function openMo(){document.getElementById('mo').classList.add('open');}
 function closeMo(){document.getElementById('mo').classList.remove('open');}
 document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeMo();});
@@ -945,8 +1439,7 @@ const grpKeys={bezSec:['sf','gw','bav','vwl'],abzSec:['na'],stSec:['fb','ueb','m
 function togF(key){
   FT[key]=!FT[key];
   const bdg=document.getElementById('b-'+key);
-  bdg.textContent=FT[key]?'AN':'AUS';
-  bdg.className=FT[key]?'badge-on':'badge-off';
+  bdg.textContent=FT[key]?'AN':'AUS';bdg.className=FT[key]?'badge-on':'badge-off';
   const m=moMap[key];
   document.getElementById(m.row).style.display=FT[key]?'block':'none';
   document.getElementById(m.sec).style.display=grpKeys[m.sec].some(k=>FT[k])?'block':'none';
@@ -956,6 +1449,12 @@ function togF(key){
 // Init
 const sel=document.getElementById('kvKasse');
 P().kassen.forEach(k=>{const o=document.createElement('option');o.value=k.v;o.textContent=k.t;sel.appendChild(o);});
+document.getElementById('ch-tage').addEventListener('input',function(){this._edited=true;});
+deSyncBrutto('m');
+chSyncBrutto('m');
+chInitYear();
+chSetPendler(true);
+fetchChLiveRate();
 calc();rFW();rFR();rEZ();
 </script>
 </body>
