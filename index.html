@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bruno · Brutto-Netto 2026</title>
+<title>Brutto-Netto</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -309,6 +309,10 @@ input[type=range]::-webkit-slider-thumb{
             <label class="toggle-label" style="gap:8px;">
               <span class="toggle-wrap"><input type="checkbox" id="rvBef" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
               RV-befreit
+            </label>
+            <label class="toggle-label" style="gap:8px;">
+              <span class="toggle-wrap"><input type="checkbox" id="isBeamter" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
+              Beamter
             </label>
             <label class="toggle-label" style="gap:8px;">
               <span class="toggle-wrap"><input type="checkbox" id="kinderlos" class="toggle-cb" onchange="syncToggle(this);calc()"><span class="toggle-track"></span><span class="toggle-thumb"></span></span>
@@ -1156,6 +1160,7 @@ function calc(){
   const kircheOn=document.getElementById('kirche').checked;
   const kl=document.getElementById('kinderlos').checked;
   const rvBef=document.getElementById('rvBef').checked;
+  const isBeamter=document.getElementById('isBeamter').checked;
   const isMJ=FT.mj&&document.getElementById('isMJ').checked;
   const isUEB=FT.ueb&&document.getElementById('isUEB').checked;
 
@@ -1180,8 +1185,8 @@ function calc(){
   function calcAbgaben(bm){
     let kv=kvTyp==='g'?Math.min(bm,p.BBG_KV)*(p.KV_AN+kvZus()/2):pkv;
     let rv=rvBef?0:Math.min(bm,p.BBG_RV)*p.RV;
-    let av=Math.min(bm,p.BBG_RV)*p.AV;
-    let pv=Math.min(bm,p.BBG_KV)*pve;
+    let av=isBeamter?0:Math.min(bm,p.BBG_RV)*p.AV;
+    let pv=isBeamter?0:Math.min(bm,p.BBG_KV)*pve;
     let s=rv+av+pv+kv;
     if(isUEB&&bm>=p.MJ_GRENZE&&bm<=p.UEB_MAX){const r=.15+.85*(bm-p.MJ_GRENZE)/(p.UEB_MAX-p.MJ_GRENZE);s*=r;rv*=r;av*=r;pv*=r;kv*=r;}
     const bja=bm*12,sja=s*12;
